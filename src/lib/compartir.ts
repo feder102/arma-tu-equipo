@@ -1,20 +1,27 @@
 import LZString from 'lz-string';
-import type { Grupo, Regla, TipoRegla } from './tipos';
+import type { Grupo, Jugador, Partido, Regla, TipoRegla } from './tipos';
 import { jugadorNuevo } from './almacen';
 import { nuevoId } from './id';
 
 /**
- * No hay servidor, así que el grupo viaja adentro del link.
+ * No hay servidor, así que todo lo compartible viaja adentro del link.
  *
- * El plantel se comprime y se cuelga del fragmento (#) de la URL: el fragmento nunca
- * se manda al servidor, así que los nombres de tu grupo no quedan en ningún log.
- * Lo que viaja es una foto del plantel, no una conexión en vivo: si después alguien
- * suma un jugador, hay que volver a pasar el link.
+ * Dos formatos, cada uno con su prefijo en el fragmento (#) — el fragmento
+ * nunca se manda al servidor, así que ni los nombres de tu grupo ni los del
+ * sorteo quedan en ningún log:
+ *
+ *   #g=<...>   El plantel entero: para invitar a otro a "unirse" al grupo.
+ *   #s=<...>   Un sorteo puntual: los equipos ya armados con sus nombres,
+ *              para pasar el resultado por WhatsApp y que quien lo abra vea
+ *              exactamente los equipos que salieron, aunque no tenga el
+ *              grupo en su teléfono.
  */
 
 const VERSION = 1;
 
-type Paquete = [
+// ─── Plantel (compartir grupo) ─────────────────────────────────────────────
+
+type PaqueteGrupo = [
   version: number,
   id: string,
   nombre: string,
@@ -26,7 +33,7 @@ type Paquete = [
 export function codificarGrupo(grupo: Grupo): string {
   const indiceDe = new Map(grupo.jugadores.map((j, i) => [j.id, i]));
 
-  const paquete: Paquete = [
+  const paquete: PaqueteGrupo = [
     VERSION,
     grupo.id,
     grupo.nombre,
@@ -49,7 +56,7 @@ export function decodificarGrupo(payload: string): Grupo | null {
   try {
     const crudo = LZString.decompressFromEncodedURIComponent(payload);
     if (!crudo) return null;
-    const paquete = JSON.parse(crudo) as Paquete;
+    const paquete = JSON.parse(crudo) as PaqueteGrupo;
     if (!Array.isArray(paquete) || paquete[0] !== VERSION) return null;
 
     const [, id, nombre, cancha, jugadoresCrudos, reglasCrudas] = paquete;
@@ -93,8 +100,105 @@ export function enlaceDeGrupo(grupo: Grupo): string {
   return `${base}#g=${codificarGrupo(grupo)}`;
 }
 
+// ─── Sorteo (compartir resultado) ──────────────────────────────────────────
+
+type PaqueteSorteo = [
+  version: number,
+  nombreGrupo: string,
+  cancha: number,
+  fechaISO: string,
+  semilla: number,
+  // Jugadores del sorteo (nombre, nivel, es arquero): los equipos apuntan por índice.
+  jugadores: [nombre: string, nivel: number, arqueroFlag: 0 | 1][],
+  // Cada equipo es una tira de índices apuntando al array de jugadores.
+  equipos: [pecheraId: string, indices: number[]][],
+];
+
+/** El sorteo hidratado que se muestra cuando alguien abre un link compartido. */
+export interface SorteoCompartido {
+  nombreGrupo: string;
+  cancha: number;
+  fecha: string;
+  semilla: number;
+  jugadores: Jugador[];
+  equipos: { pechera: string; jugadores: Jugador[] }[];
+}
+
+export function codificarSorteo(grupo: Grupo, sorteo: Partido): string {
+  // Sólo empaquetamos los jugadores que efectivamente juegan en este sorteo.
+  const idsEnSorteo = new Set(sorteo.equipos.flatMap((e) => e.jugadores));
+  const jugadoresDelSorteo = grupo.jugadores.filter((j) => idsEnSorteo.has(j.id));
+  const indiceDe = new Map(jugadoresDelSorteo.map((j, i) => [j.id, i]));
+
+  const paquete: PaqueteSorteo = [
+    VERSION,
+    grupo.nombre,
+    grupo.cancha,
+    sorteo.fecha,
+    sorteo.semilla,
+    jugadoresDelSorteo.map((j) => [j.nombre, j.nivel, j.arquero ? 1 : 0]),
+    sorteo.equipos.map((e) => [
+      e.pechera,
+      e.jugadores.map((id) => indiceDe.get(id)).filter((i): i is number => i !== undefined),
+    ]),
+  ];
+
+  return LZString.compressToEncodedURIComponent(JSON.stringify(paquete));
+}
+
+export function decodificarSorteo(payload: string): SorteoCompartido | null {
+  try {
+    const crudo = LZString.decompressFromEncodedURIComponent(payload);
+    if (!crudo) return null;
+    const paquete = JSON.parse(crudo) as PaqueteSorteo;
+    if (!Array.isArray(paquete) || paquete[0] !== VERSION) return null;
+
+    const [, nombreGrupo, cancha, fecha, semilla, jugadoresCrudos, equiposCrudos] = paquete;
+    if (!Array.isArray(jugadoresCrudos) || !Array.isArray(equiposCrudos)) return null;
+
+    const jugadores = jugadoresCrudos.map(([nom, nivel, arq]) => {
+      const j = jugadorNuevo(String(nom).slice(0, 40), Math.min(10, Math.max(1, Number(nivel) || 5)));
+      j.arquero = arq === 1;
+      return j;
+    });
+
+    const equipos = equiposCrudos
+      .map(([pechera, indices]) => ({
+        pechera: String(pechera).slice(0, 20),
+        jugadores: indices.map((i) => jugadores[i]).filter((j): j is Jugador => Boolean(j)),
+      }))
+      .filter((e) => e.jugadores.length > 0);
+
+    if (equipos.length < 2) return null;
+
+    return {
+      nombreGrupo: String(nombreGrupo ?? 'Grupo compartido').slice(0, 60),
+      cancha: Math.min(11, Math.max(2, Number(cancha) || 5)),
+      fecha: String(fecha ?? new Date().toISOString()),
+      semilla: Number(semilla) || 0,
+      jugadores,
+      equipos,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function enlaceDelSorteo(grupo: Grupo, sorteo: Partido): string {
+  const base = `${window.location.origin}/g/${grupo.id}/sorteo`;
+  return `${base}#s=${codificarSorteo(grupo, sorteo)}`;
+}
+
+// ─── Rutas y hash ──────────────────────────────────────────────────────────
+
 export function payloadDelHash(hash: string): string | null {
   const limpio = hash.startsWith('#') ? hash.slice(1) : hash;
   const parametros = new URLSearchParams(limpio);
   return parametros.get('g');
+}
+
+export function payloadSorteoDelHash(hash: string): string | null {
+  const limpio = hash.startsWith('#') ? hash.slice(1) : hash;
+  const parametros = new URLSearchParams(limpio);
+  return parametros.get('s');
 }

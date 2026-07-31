@@ -4,6 +4,7 @@ import { useContextoGrupo } from './MarcoGrupo';
 import { Balanza, TarjetaPechera } from '../componentes/Pecheras';
 import { Seccion, formatearNivel, useCopiar } from '../componentes/Piezas';
 import { sortearEquipos } from '../lib/armar';
+import { enlaceDelSorteo } from '../lib/compartir';
 import { pechera } from '../lib/pecheras';
 import { nuevoId } from '../lib/id';
 import type { Jugador } from '../lib/tipos';
@@ -95,6 +96,10 @@ export default function Sorteo() {
     }));
   }
 
+  // El link autosuficiente: quien lo abre ve los equipos aunque no tenga el
+  // grupo en su teléfono, porque la foto del sorteo viaja adentro del #.
+  const link = useMemo(() => enlaceDelSorteo(grupo, sorteo), [grupo, sorteo]);
+
   const textoParaPasar = [
     `${grupo.nombre} — equipos`,
     '',
@@ -103,6 +108,7 @@ export default function Sorteo() {
       ...e.map((j) => `· ${j.nombre}${j.arquero ? ' (arq)' : ''}`),
       '',
     ]),
+    link,
   ].join('\n');
 
   const clavados = Object.keys(fijados).length;
@@ -155,8 +161,9 @@ export default function Sorteo() {
         </div>
 
         <p className="nota">
-          Tocá <strong>fijo</strong> al lado de un jugador para clavarlo en su equipo y volver a sortear el resto.
-          Sirve cuando alguien ya se puso la pechera.
+          El link del sorteo va con el mensaje: cualquiera que lo abra ve estos mismos equipos, aunque no
+          tenga la planilla en su teléfono. Tocá <strong>fijo</strong> al lado de un jugador para clavarlo
+          en su equipo y volver a sortear el resto.
         </p>
       </Seccion>
 
