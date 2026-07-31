@@ -1,21 +1,17 @@
 import { useCallback, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 
-/** La tira impresa de arriba de todo: lo que hace que esto sea un formulario y no una web. */
-export function TiraFormulario({ derecha }: { derecha: string }) {
-  return (
-    <div className="tira margen">
-      <span className="etiqueta">Planilla de armado</span>
-      <span className="etiqueta">{derecha}</span>
-    </div>
-  );
-}
-
-/** El sello de goma con el código del grupo. */
+/**
+ * El sello del código del grupo — la firma de la casa.
+ *
+ * Estampado a mano sobre el papel, como el cuño rojo de secretaría o el sello
+ * del club en la boleta de inscripción. Es lo que hace que este grupo sea ESTE
+ * grupo y no otro; cuando alguien te pide el código, este es el número que dicta.
+ */
 export function Sello({ codigo }: { codigo: string }) {
   return (
     <div className="sello" title={`Código del grupo: ${codigo}`}>
-      <span className="sello__rotulo">Código</span>
+      <span className="sello__rotulo">Código del grupo</span>
       <span className="sello__codigo">{codigo}</span>
     </div>
   );

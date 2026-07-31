@@ -49,7 +49,28 @@ export default function App() {
         </Routes>
 
         <footer className="pie margen">
-          <p className="etiqueta">Arma Tu Equipo</p>
+          <p className="etiqueta pie__marca">Arma Tu Equipo</p>
+          <a
+            className="firma"
+            href="https://landing.vila.ar"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Hecho por VILA — abrir landing.vila.ar en una pestaña nueva"
+          >
+            <img
+              src="/vila.webp"
+              alt=""
+              className="firma__logo"
+              width="72"
+              height="72"
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="firma__texto">
+              <span className="firma__hecho etiqueta">Hecho por</span>
+              <span className="firma__nombre display">VILA</span>
+            </span>
+          </a>
         </footer>
       </div>
     </ProveedorGrupos>

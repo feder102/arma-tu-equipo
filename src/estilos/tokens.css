@@ -1,45 +1,69 @@
 /*
-  Arma Tu Equipo — sistema visual "planilla".
-  Dos tintas: lo impreso (negro sobre papel de oficina verdoso) y lo escrito (birome azul).
-  Todo lo que carga el usuario va en azul; el formulario en sí, en negro.
-  El único color saturado aparece al final: las pecheras del sorteo.
+  Arma Tu Equipo — sistema visual "planilla del fútbol de los martes".
+
+  Dos capas de tinta sobre papel:
+    · lo IMPRESO (negro, condensada, filetes) — el formulario en sí
+    · lo ESCRITO (tinta cargada azul-violeta) — lo que carga el usuario
+  Dos colores cálidos, que aparecen recién cuando importan:
+    · CANARIO — el equipo activo, el jugador seleccionado, el amarillo de la Copa
+    · SELLO — el código del grupo, el ganador, la línea que corrige el árbitro
+  Y una vez, al final del sorteo, la explosión de las PECHERAS.
 */
 
 :root {
-  /* Papel */
-  --escritorio: #b9c1aa;
-  --papel: #e9ece1;
-  --papel-banda: #e0e4d6;
-  --papel-hondo: #d7dccb;
+  /* Papel: un cuadernillo de oficina, con la fibra visible al mirar de cerca. */
+  --escritorio: #a3ad91;
+  --papel: #ecefe2;
+  --papel-banda: #e3e7d8;
+  --papel-hondo: #d8ddca;
 
-  /* Tinta impresa */
-  --tinta: #15190f;
-  --tinta-2: #474e3f;
-  --tinta-3: #5e6555;
-  /* Filetes decorativos (renglones) y de control (bordes de cosas que se tocan,
-     que tienen que llegar a 3:1 contra el papel para verse de verdad). */
-  --filete: #a7b098;
-  --filete-activo: #7f886f;
-  --filete-fuerte: #15190f;
+  /* Un rayado horizontal casi imperceptible, como el papel de renglones Rivadavia. */
+  --papel-fibras:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 26px,
+      rgba(21, 25, 15, 0.028) 26px,
+      rgba(21, 25, 15, 0.028) 27px
+    );
 
-  /* Tinta escrita */
-  --birome: #1b3aa0;
-  --birome-2: #4058b8;
-  --birome-fondo: #dde1f0;
+  /* Tinta impresa: negro humo con matiz verde, no negro plano de imprenta digital. */
+  --tinta: #12160b;
+  --tinta-2: #3d4335;
+  --tinta-3: #545a4b;
+  --filete: #a3ac93;
+  --filete-activo: #7a836a;
+  --filete-fuerte: #12160b;
 
-  /* Sello */
-  --sello: #a8342a;
-  --sello-fondo: #f0e0dd;
+  /* Tinta cargada: la lapicera Bic, pero más honda — como salía en la revista El Gráfico. */
+  --birome: #16276a;
+  --birome-2: #2c3f8a;
+  --birome-fondo: #dbe0f0;
+
+  /* El amarillo canario: la Copa, la remera del arquero clásico, la línea que dibuja el sol. */
+  --canario: #f2c230;
+  --canario-hondo: #b78b12;
+  --canario-fondo: #f7e7a8;
+
+  /* El sello rojo: cuño de secretaría, boleta con corrección, tarjeta del árbitro. */
+  --sello: #b23324;
+  --sello-hondo: #7a1e12;
+  --sello-fondo: #f0dbd6;
+
+  /* Verde cancha: aparece sólo en el borde de la hoja, para que se lea "esto está apoyado en la cancha". */
+  --cancha: #315b30;
+  --cal: #f4f5ec;
 
   /* Tipografía */
   --fuente-display: 'Archivo Variable', 'Arial Narrow', system-ui, sans-serif;
   --fuente-texto: 'Archivo Variable', system-ui, -apple-system, sans-serif;
   --fuente-dato: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
 
-  /* Escala con al menos 1.25 entre escalones, para que la jerarquía se lea sola. */
-  --t-titulo: clamp(2.5rem, 12vw, 4.5rem);
-  --t-seccion: clamp(1.5rem, 6vw, 2rem);
-  --t-rubro: 1.25rem;
+  /* Escala tipográfica con al menos 1.25 entre escalones. Display al peso de titular deportivo. */
+  --t-tapa: clamp(3rem, 13vw, 5.5rem);
+  --t-titulo: clamp(2.25rem, 7vw, 3rem);
+  --t-seccion: 1.375rem;
+  --t-rubro: 1.125rem;
   --t-cuerpo: 1rem;
   --t-nota: 0.875rem;
   --t-dato: 0.8125rem;
@@ -58,24 +82,28 @@
   --e7: 3rem;
   --e8: 4rem;
 
-  --hoja: 780px;
+  --hoja: 820px;
   --canto: 1px solid var(--filete);
   --canto-fuerte: 2px solid var(--filete-fuerte);
 
   --anim: 180ms cubic-bezier(0.2, 0, 0.1, 1);
 }
 
-/* El renglón del formulario: mayúscula condensada, muy apretada. */
+/*
+  Los tres pesos tipográficos que uso.
+  · Display: mayúscula muy condensada, apretada — titular de tapa deportiva.
+  · Etiqueta: rótulo mecanografiado, letter-spacing generoso, monospaced.
+  · Dato: número tabular, siempre.
+*/
 .display {
   font-family: var(--fuente-display);
-  font-stretch: 70%;
-  font-weight: 800;
+  font-stretch: 62%;
+  font-weight: 850;
   text-transform: uppercase;
-  line-height: 0.9;
-  letter-spacing: 0.004em;
+  line-height: 0.86;
+  letter-spacing: -0.008em;
 }
 
-/* Los rótulos chiquitos impresos arriba de cada campo. */
 .etiqueta {
   font-family: var(--fuente-dato);
   font-size: var(--t-etiqueta);
@@ -85,14 +113,12 @@
   color: var(--tinta-3);
 }
 
-/* Números: siempre monoespaciados y tabulares, como en un marcador. */
 .dato {
   font-family: var(--fuente-dato);
   font-variant-numeric: tabular-nums;
   font-size: var(--t-dato);
 }
 
-/* Lo que escribió el usuario. */
 .escrito {
   color: var(--birome);
 }

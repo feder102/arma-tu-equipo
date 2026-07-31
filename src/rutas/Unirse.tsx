@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useGrupos, type ModoImportacion } from '../estado/grupos';
-import { Resumen, Seccion, Sello, TiraFormulario, formatearNivel } from '../componentes/Piezas';
+import { Resumen, Seccion, Sello, formatearNivel } from '../componentes/Piezas';
 import { decodificarGrupo, payloadDelHash } from '../lib/compartir';
 
 export default function Unirse() {
@@ -43,8 +43,6 @@ export default function Unirse() {
 
   return (
     <>
-      <TiraFormulario derecha={`Fútbol ${entrante.cancha}`} />
-
       <header className="cabecera margen">
         <div className="cabecera__marca">
           <h1 className="cabecera__titulo display">Te pasaron {entrante.nombre}</h1>

@@ -10,12 +10,34 @@ html {
 
 body {
   margin: 0;
-  background: var(--escritorio);
   color: var(--tinta);
   font-family: var(--fuente-texto);
   font-size: var(--t-cuerpo);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  /* Fondo verde cancha con la línea de cal a los costados de la hoja. */
+  background:
+    linear-gradient(
+      to right,
+      var(--cancha) 0,
+      var(--cancha) calc(50% - var(--hoja) / 2 - 4px),
+      var(--cal) calc(50% - var(--hoja) / 2 - 4px),
+      var(--cal) calc(50% - var(--hoja) / 2 - 2px),
+      var(--cancha) calc(50% - var(--hoja) / 2 - 2px),
+      var(--cancha) calc(50% + var(--hoja) / 2 + 2px),
+      var(--cal) calc(50% + var(--hoja) / 2 + 2px),
+      var(--cal) calc(50% + var(--hoja) / 2 + 4px),
+      var(--cancha) calc(50% + var(--hoja) / 2 + 4px),
+      var(--cancha) 100%
+    );
+  background-attachment: fixed;
+  min-height: 100dvh;
+}
+
+@media (max-width: 860px) {
+  body {
+    background: var(--papel);
+  }
 }
 
 h1,
@@ -53,15 +75,20 @@ textarea {
   outline-offset: 2px;
 }
 
-/* La hoja: la app entera vive sobre una planilla apoyada en el escritorio. */
+/*
+ * La hoja: la planilla de convocatoria del fútbol de los martes.
+ * Fibra horizontal como el papel de renglones Rivadavia, sombra que la
+ * despega de la cancha, sin bordes grises que ensucien la lectura.
+ */
 .hoja {
   max-width: var(--hoja);
   margin: 0 auto;
   min-height: 100dvh;
-  background: var(--papel);
-  border-left: var(--canto);
-  border-right: var(--canto);
+  background:
+    var(--papel-fibras),
+    var(--papel);
   padding-bottom: calc(var(--e8) + env(safe-area-inset-bottom));
+  box-shadow: 0 0 0 1px rgba(18, 22, 11, 0.08), 0 24px 40px -20px rgba(18, 22, 11, 0.28);
 }
 
 .margen {
