@@ -1,0 +1,1115 @@
+/* ── Cabecera ─────────────────────────────────────────────────────────── */
+
+/* El renglón impreso de arriba de todo, con el doble filete del pie. */
+.tira {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e4);
+  padding-block: 9px 7px;
+  border-bottom: 2px solid var(--filete-fuerte);
+  box-shadow: 0 3px 0 -2px var(--filete-fuerte);
+}
+
+.cabecera {
+  padding-top: var(--e6);
+  padding-bottom: var(--e3);
+}
+
+.cabecera__marca {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--e4);
+}
+
+.cabecera__titulo {
+  font-size: var(--t-titulo);
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.cabecera__titulo a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cabecera__nombre {
+  flex: 1;
+  min-width: 0;
+}
+
+/* El nombre del grupo se escribe encima del título, sin entrar en modo edición. */
+.titulo-editable {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  padding: 0;
+  margin-top: 2px;
+  font-family: var(--fuente-display);
+  font-stretch: 68%;
+  font-weight: 850;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: 0.005em;
+  font-size: clamp(2rem, 8vw, 3.25rem);
+  color: var(--birome);
+  transition: border-color var(--anim);
+  resize: none;
+  overflow: hidden;
+}
+
+.titulo-editable:hover {
+  border-bottom-color: var(--filete);
+}
+
+.titulo-editable:focus {
+  outline: none;
+  border-bottom-color: var(--birome);
+}
+
+.volver {
+  color: var(--tinta-3);
+  text-decoration: none;
+  letter-spacing: 0.12em;
+}
+
+.volver:hover {
+  color: var(--birome);
+}
+
+.cabecera__bajada {
+  max-width: 40ch;
+  margin-top: var(--e4);
+  color: var(--tinta-2);
+}
+
+/* El sello de goma con el código del grupo: la marca de la casa. */
+.sello {
+  flex: none;
+  transform: rotate(-4deg);
+  border: 2px solid var(--sello);
+  color: var(--sello);
+  padding: 4px 8px 3px;
+  text-align: center;
+  background: var(--sello-fondo);
+  box-shadow: inset 0 0 0 1px var(--sello-fondo), inset 0 0 0 2px var(--sello);
+}
+
+.sello__rotulo {
+  font-family: var(--fuente-dato);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  display: block;
+}
+
+.sello__codigo {
+  font-family: var(--fuente-dato);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: 0.1em;
+  display: block;
+}
+
+/* ── Campos del formulario ────────────────────────────────────────────── */
+
+.fila-campos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e2) var(--e5);
+  padding-block: var(--e3);
+}
+
+.campo {
+  display: block;
+  flex: 1 1 12rem;
+}
+
+.campo__rotulo {
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* Se escribe directo sobre el renglón, sin cajas ni bordes redondeados. */
+.campo__entrada {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--filete-activo);
+  background: transparent;
+  color: var(--birome);
+  padding: 4px 0 5px;
+  font-weight: 500;
+  transition: border-color var(--anim);
+}
+
+.campo__entrada::placeholder {
+  color: var(--tinta-3);
+  font-weight: 400;
+}
+
+.campo__entrada:focus {
+  outline: none;
+  border-bottom-color: var(--birome);
+}
+
+.campo__entrada:focus-visible {
+  outline: none;
+}
+
+.campo__entrada--dato {
+  font-family: var(--fuente-dato);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── Botones ──────────────────────────────────────────────────────────── */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e2);
+  font-family: var(--fuente-display);
+  font-stretch: 74%;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.9375rem;
+  line-height: 1;
+  padding: 13px 18px;
+  border: 1px solid var(--tinta);
+  background: transparent;
+  color: var(--tinta);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--anim), color var(--anim), transform var(--anim);
+}
+
+.boton:hover {
+  background: var(--papel-hondo);
+}
+
+.boton:active {
+  transform: translateY(1px);
+}
+
+.boton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.boton--principal {
+  background: var(--tinta);
+  color: var(--papel);
+  border-color: var(--tinta);
+}
+
+.boton--principal:hover:not(:disabled) {
+  background: var(--birome);
+  border-color: var(--birome);
+}
+
+.boton--sorteo {
+  width: 100%;
+  font-size: clamp(1.5rem, 7vw, 2.25rem);
+  font-stretch: 68%;
+  font-weight: 850;
+  letter-spacing: 0.02em;
+  padding: 20px;
+}
+
+.boton--bloque {
+  width: 100%;
+}
+
+.boton--chico {
+  padding: 7px 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.boton--pelado {
+  border-color: transparent;
+  padding: 7px 6px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--tinta-3);
+}
+
+.boton--pelado:hover {
+  color: var(--tinta);
+  background: var(--papel-hondo);
+}
+
+.boton--peligro:hover {
+  background: var(--sello-fondo);
+  color: var(--sello);
+}
+
+.botonera {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e2);
+}
+
+/* ── Solapas de navegación ────────────────────────────────────────────── */
+
+.solapas {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--filete-fuerte);
+  margin-top: var(--e4);
+}
+
+.solapa {
+  font-family: var(--fuente-display);
+  font-stretch: 74%;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8125rem;
+  padding: 10px 14px;
+  color: var(--tinta-3);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  margin-bottom: -2px;
+  transition: color var(--anim), background var(--anim);
+}
+
+.solapa:hover {
+  color: var(--tinta);
+}
+
+.solapa[aria-current='page'] {
+  color: var(--tinta);
+  background: var(--papel);
+  border-color: var(--filete-fuerte);
+  border-width: 2px 2px 0;
+}
+
+/* ── Secciones ────────────────────────────────────────────────────────── */
+
+/* Entre secciones se respira; adentro de cada una, las cosas van juntas. */
+.seccion {
+  padding-top: var(--e7);
+  padding-bottom: var(--e2);
+}
+
+.seccion__titulo {
+  font-size: var(--t-rubro);
+  font-family: var(--fuente-display);
+  font-stretch: 74%;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--e1) var(--e3);
+  padding-bottom: var(--e2);
+  margin-bottom: var(--e3);
+  border-bottom: 1px solid var(--filete-fuerte);
+}
+
+/* Va a la derecha cuando entra y baja de renglón cuando no: nunca se apretuja. */
+.seccion__cuenta {
+  margin-left: auto;
+  font-family: var(--fuente-dato);
+  font-size: var(--t-dato);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--tinta-3);
+}
+
+/* ── Plantel ──────────────────────────────────────────────────────────── */
+
+.plantel-lista {
+  border-top: 1px solid var(--filete);
+  margin-top: var(--e5);
+}
+
+.jugador {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--e1) var(--e3);
+  padding-block: var(--e3);
+  border-bottom: 1px solid var(--filete);
+}
+
+.jugador--baja {
+  opacity: 0.45;
+}
+
+.jugador__numero {
+  grid-column: 1;
+  grid-row: 1;
+  font-family: var(--fuente-dato);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--tinta-3);
+}
+
+.jugador__nombre {
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--birome);
+  font-weight: 550;
+  font-size: 1.0625rem;
+  padding: 2px 0;
+  min-width: 0;
+}
+
+.jugador__nombre:focus {
+  outline: none;
+  background: var(--birome-fondo);
+}
+
+
+.jugador__acciones {
+  grid-column: 3;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--e1);
+}
+
+.jugador__nivel {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--e3);
+}
+
+@media (min-width: 660px) {
+  /* Columnas de tabla: el nivel siempre arranca en el mismo lugar. */
+  .jugador {
+    grid-template-columns: 1.75rem minmax(6ch, 16ch) minmax(0, 1fr) auto;
+  }
+
+  .jugador__nivel {
+    grid-column: 3;
+    grid-row: 1;
+    justify-content: flex-start;
+  }
+
+  .jugador__acciones {
+    grid-column: 4;
+    grid-row: 1;
+  }
+}
+
+/* Diez casilleros para marcar el nivel, como la escala de una planilla. */
+.nivel {
+  display: flex;
+  gap: 3px;
+}
+
+.nivel__casillero {
+  width: 20px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--filete-activo);
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--anim), border-color var(--anim);
+}
+
+.nivel__casillero:hover {
+  border-color: var(--birome-2);
+}
+
+.nivel__casillero[data-marcado='si'] {
+  background: var(--birome);
+  border-color: var(--birome);
+}
+
+.nivel__valor {
+  font-family: var(--fuente-dato);
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--birome);
+  min-width: 2ch;
+}
+
+.insignia {
+  font-family: var(--fuente-dato);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 6px 9px 5px;
+  border: 1px solid var(--filete-activo);
+  color: var(--tinta-3);
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--anim);
+}
+
+.insignia[aria-pressed='true'] {
+  border-color: var(--tinta);
+  background: var(--tinta);
+  color: var(--papel);
+}
+
+/* ── Alta de jugador ──────────────────────────────────────────────────── */
+
+.alta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--e3);
+  align-items: end;
+  padding-block: var(--e4);
+  background: var(--papel-banda);
+  padding-inline: var(--e3);
+  margin-top: var(--e4);
+  border: 1px solid var(--filete);
+}
+
+.alta__nivel {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--e3);
+  flex-wrap: wrap;
+}
+
+/* ── Anotarse ─────────────────────────────────────────────────────────── */
+
+/* Columnas fijas para que ARQ y nivel caigan siempre en la misma vertical,
+   aunque cada fila sea su propia grilla. */
+.anotado {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 3.25rem 2.5ch;
+  align-items: center;
+  gap: var(--e3);
+  padding-block: 2px;
+  border-bottom: 1px solid var(--filete);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border-inline: 0;
+  border-top: 0;
+}
+
+.anotado:hover {
+  background: var(--papel-banda);
+}
+
+
+.anotado__casilla {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--tinta-3);
+  display: grid;
+  place-items: center;
+  color: var(--birome);
+}
+
+.anotado[aria-pressed='true'] .anotado__casilla {
+  border-color: var(--birome);
+}
+
+.anotado__nombre {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.0625rem;
+  color: var(--tinta-3);
+  padding-block: 10px;
+}
+
+.anotado[aria-pressed='true'] .anotado__nombre {
+  color: var(--birome);
+  font-weight: 550;
+}
+
+.anotado__nivel {
+  font-family: var(--fuente-dato);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--birome);
+  text-align: right;
+}
+
+.anotado__arq {
+  font-family: var(--fuente-dato);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--tinta-3);
+  text-align: center;
+}
+
+.anotado__arq:not(:empty) {
+  border: 1px solid var(--filete);
+  padding: 2px 4px 1px;
+}
+
+/* ── Renglón de totales ───────────────────────────────────────────────── */
+
+/* Los números del grupo van como el encabezado de una planilla: campo y valor
+   en una línea reglada, no como tarjetas de estadística. */
+.resumen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e2) var(--e5);
+  margin: 0;
+  padding-block: var(--e3) var(--e2);
+  border-bottom: 2px solid var(--filete-fuerte);
+  box-shadow: 0 3px 0 -2px var(--filete-fuerte);
+}
+
+.resumen__campo {
+  display: flex;
+  align-items: baseline;
+  gap: var(--e2);
+}
+
+.resumen__valor {
+  margin: 0;
+  font-family: var(--fuente-dato);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.1;
+  color: var(--birome);
+}
+
+/* ── Selector de cantidad ─────────────────────────────────────────────── */
+
+.opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e2);
+  padding-top: var(--e2);
+}
+
+.opcion {
+  font-family: var(--fuente-dato);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 10px 14px;
+  border: 1px solid var(--filete-activo);
+  background: transparent;
+  color: var(--tinta-2);
+  cursor: pointer;
+  transition: all var(--anim);
+}
+
+.opcion:hover {
+  border-color: var(--tinta);
+}
+
+.opcion[aria-pressed='true'] {
+  background: var(--birome);
+  border-color: var(--birome);
+  color: var(--papel);
+}
+
+/* ── Pecheras (el resultado) ──────────────────────────────────────────── */
+
+.pecheras {
+  display: grid;
+  gap: var(--e4);
+  grid-template-columns: 1fr;
+  padding-top: var(--e4);
+}
+
+@media (min-width: 620px) {
+  .pecheras {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pechera {
+  border: 2px solid var(--tinta);
+  background: var(--papel);
+  display: flex;
+  flex-direction: column;
+  animation: entrar 220ms cubic-bezier(0.2, 0, 0.1, 1) both;
+  animation-delay: calc(var(--orden, 0) * 60ms);
+}
+
+.pechera__cuello {
+  background: var(--tela);
+  color: var(--tinta-pechera);
+  padding: var(--e3) var(--e3) var(--e2);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--e3);
+}
+
+.pechera__nombre {
+  font-family: var(--fuente-display);
+  font-stretch: 68%;
+  font-weight: 850;
+  text-transform: uppercase;
+  font-size: 1.75rem;
+  line-height: 0.88;
+  letter-spacing: 0.01em;
+}
+
+.pechera__promedio {
+  font-family: var(--fuente-dato);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.pechera__promedio b {
+  display: block;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.pechera__lista {
+  padding: var(--e2) var(--e3) var(--e3);
+}
+
+.pechera__jugador {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr) auto;
+  gap: var(--e2);
+  align-items: center;
+  padding-block: 7px;
+  border-bottom: 1px solid var(--filete);
+  animation: escribir 180ms ease-out both;
+  animation-delay: calc(80ms + var(--orden, 0) * 60ms + var(--linea, 0) * 18ms);
+}
+
+.pechera__jugador:last-child {
+  border-bottom: 0;
+}
+
+.pechera__dorsal {
+  font-family: var(--fuente-dato);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--tinta-3);
+}
+
+.pechera__apellido {
+  color: var(--birome);
+  font-weight: 550;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Clavar a alguien en su equipo: tiene que estar, pero sin gritar. */
+.clavo {
+  font-family: var(--fuente-dato);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  border: 0;
+  background: transparent;
+  color: var(--tinta-3);
+  padding: 8px 6px;
+  cursor: pointer;
+  transition: color var(--anim);
+}
+
+.clavo:hover {
+  color: var(--tinta);
+}
+
+.clavo[aria-pressed='true'] {
+  color: var(--birome);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pechera__marca {
+  font-family: var(--fuente-dato);
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--birome);
+  display: flex;
+  align-items: center;
+  gap: var(--e2);
+}
+
+/* ── La balanza ───────────────────────────────────────────────────────── */
+
+.balanza {
+  padding-block: var(--e4);
+}
+
+.balanza__barras {
+  display: flex;
+  height: 10px;
+  border: 1px solid var(--tinta);
+  margin-top: var(--e2);
+  overflow: hidden;
+}
+
+.balanza__parte {
+  height: 100%;
+  border-right: 1px solid var(--tinta);
+}
+
+.balanza__parte:last-child {
+  border-right: 0;
+}
+
+.balanza__lectura {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e3);
+  margin-top: var(--e2);
+}
+
+/* ── Historial ────────────────────────────────────────────────────────── */
+
+.partido {
+  padding-block: var(--e4);
+  border-bottom: 1px solid var(--filete);
+}
+
+.partido__fecha {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e3);
+}
+
+.partido__equipos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e4);
+  margin-top: var(--e2);
+}
+
+.partido__equipo {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.partido__color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--tinta);
+  background: var(--tela);
+  margin-right: 6px;
+  vertical-align: baseline;
+}
+
+.partido__nombres {
+  color: var(--tinta-2);
+  margin-top: 2px;
+}
+
+/* ── Grupos guardados ─────────────────────────────────────────────────── */
+
+.grupo-fila {
+  display: flex;
+  align-items: center;
+  gap: var(--e3);
+  padding-block: var(--e4);
+  border-bottom: 1px solid var(--filete);
+  text-decoration: none;
+  color: inherit;
+}
+
+.grupo-fila:hover .grupo-fila__nombre {
+  color: var(--birome);
+}
+
+.grupo-fila__cuerpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.grupo-fila__nombre {
+  display: block;
+  font-family: var(--fuente-display);
+  font-stretch: 72%;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 1.375rem;
+  line-height: 1;
+  transition: color var(--anim);
+}
+
+.grupo-fila__detalle {
+  display: block;
+  font-family: var(--fuente-dato);
+  font-size: 0.75rem;
+  color: var(--tinta-3);
+  margin-top: 5px;
+}
+
+.grupo-fila__flecha {
+  font-family: var(--fuente-dato);
+  color: var(--tinta-3);
+  flex: none;
+}
+
+/* ── Avisos y vacíos ──────────────────────────────────────────────────── */
+
+/* Nota al pie del formulario: recuadro impreso, sin barritas de color al costado. */
+.aviso {
+  border: 1px solid var(--sello);
+  background: var(--sello-fondo);
+  color: var(--tinta);
+  padding: var(--e3);
+  margin-block: var(--e4);
+  font-size: var(--t-nota);
+  max-width: var(--renglon);
+}
+
+.aviso--tinta {
+  border-color: var(--birome);
+  background: var(--birome-fondo);
+}
+
+.vacio {
+  padding-block: var(--e4);
+  color: var(--tinta-2);
+  max-width: 46ch;
+}
+
+.nota {
+  color: var(--tinta-2);
+  font-size: var(--t-nota);
+  margin-top: var(--e3);
+  max-width: var(--renglon);
+}
+
+.enlace-copiable {
+  font-family: var(--fuente-dato);
+  font-size: var(--t-dato);
+  word-break: break-all;
+  color: var(--tinta-2);
+  background: var(--papel-banda);
+  border: 1px solid var(--filete);
+  padding: var(--e2);
+  margin-top: var(--e2);
+  max-height: 5.5rem;
+  overflow: auto;
+}
+
+/* ── Reglas ───────────────────────────────────────────────────────────── */
+
+.regla {
+  display: flex;
+  align-items: center;
+  gap: var(--e2);
+  padding-block: var(--e2);
+  border-bottom: 1px solid var(--filete);
+  font-size: 0.9375rem;
+}
+
+.regla__tipo {
+  font-family: var(--fuente-dato);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--tinta-3);
+  padding: 3px 5px 2px;
+  color: var(--tinta-2);
+  flex: none;
+}
+
+.regla__quienes {
+  flex: 1;
+  min-width: 0;
+  color: var(--birome);
+}
+
+.selector {
+  border: 0;
+  border-bottom: 1px solid var(--filete-activo);
+  background: transparent;
+  color: var(--birome);
+  padding: 5px 0;
+  font-size: 0.9375rem;
+  max-width: 100%;
+}
+
+/* ── Barra fija de acción ─────────────────────────────────────────────── */
+
+.barra-pie {
+  position: sticky;
+  bottom: 0;
+  background: var(--papel);
+  border-top: 2px solid var(--filete-fuerte);
+  padding-block: var(--e3);
+  padding-bottom: calc(var(--e3) + env(safe-area-inset-bottom));
+  margin-top: var(--e5);
+  z-index: 5;
+}
+
+/* ── Piezas sueltas ───────────────────────────────────────────────────── */
+
+.campo--suelto {
+  border: 0;
+  padding: 0;
+  margin: var(--e4) 0 0;
+}
+
+.botonera--separada {
+  margin-top: var(--e4);
+}
+
+.botonera--pegada {
+  gap: 0;
+  align-items: center;
+}
+
+.opciones--sueltas {
+  margin-top: var(--e4);
+}
+
+.nota--arriba {
+  margin-top: 0;
+  margin-bottom: var(--e3);
+  padding-top: var(--e3);
+}
+
+.alta__aviso {
+  grid-column: 1 / -1;
+  margin-block: 0;
+}
+
+.es-confirmando {
+  background: var(--sello-fondo);
+  border-color: var(--sello);
+  color: var(--sello);
+}
+
+.pechera__arq {
+  font-family: var(--fuente-dato);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--tinta-3);
+}
+
+/* Los tres pasos: es una secuencia de verdad, por eso van numerados. */
+.explicacion {
+  counter-reset: paso;
+}
+
+.explicacion li {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: var(--e3);
+  padding-block: var(--e4);
+  border-bottom: 1px solid var(--filete);
+}
+
+.explicacion__paso {
+  font-family: var(--fuente-display);
+  font-stretch: 70%;
+  font-weight: 850;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--tinta-3);
+}
+
+.explicacion p {
+  color: var(--tinta-2);
+  max-width: var(--renglon);
+}
+
+.regla-alta {
+  margin-top: var(--e4);
+  padding: var(--e3);
+  background: var(--papel-banda);
+  border: 1px solid var(--filete);
+}
+
+.regla-alta__pares {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e3);
+  align-items: flex-end;
+  margin-top: var(--e3);
+}
+
+.lista-nombres__fila {
+  display: flex;
+  align-items: center;
+  gap: var(--e3);
+  padding-block: var(--e2);
+  border-bottom: 1px solid var(--filete);
+}
+
+.lista-nombres__fila .escrito {
+  flex: 1;
+  min-width: 0;
+  font-weight: 550;
+}
+
+.partido__goles {
+  display: flex;
+  align-items: baseline;
+  gap: var(--e2);
+  margin-top: var(--e2);
+}
+
+.partido__resultado {
+  color: var(--tinta-2);
+  margin-right: var(--e2);
+}
+
+.campo__entrada--corto {
+  width: 3.5rem;
+  font-family: var(--fuente-dato);
+  font-variant-numeric: tabular-nums;
+}
+
+.pie {
+  padding-top: var(--e6);
+  padding-bottom: var(--e5);
+  margin-top: var(--e6);
+  border-top: 1px solid var(--filete);
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes escribir {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    image: arma-tu-equipo:latest
+    restart: unless-stopped
+    # Sólo escucha en localhost del VPS: quien atiende afuera es Caddy.
+    ports:
+      - '127.0.0.1:8080:80'
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - web
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
+    environment:
+      DOMINIO: ${DOMINIO:?Falta definir DOMINIO en el archivo .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

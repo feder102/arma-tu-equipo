@@ -1,0 +1,159 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--escritorio);
+  color: var(--tinta);
+  font-family: var(--fuente-texto);
+  font-size: var(--t-cuerpo);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: var(--birome);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--birome);
+  outline-offset: 2px;
+}
+
+/* La hoja: la app entera vive sobre una planilla apoyada en el escritorio. */
+.hoja {
+  max-width: var(--hoja);
+  margin: 0 auto;
+  min-height: 100dvh;
+  background: var(--papel);
+  border-left: var(--canto);
+  border-right: var(--canto);
+  padding-bottom: calc(var(--e8) + env(safe-area-inset-bottom));
+}
+
+.margen {
+  padding-inline: var(--e4);
+}
+
+/* Todo lo que sea prosa se corta antes de que el renglón se vuelva incómodo. */
+.prosa {
+  max-width: var(--renglon);
+}
+
+@media (min-width: 600px) {
+  .margen {
+    padding-inline: var(--e6);
+  }
+}
+
+/* Doble filete: el remate clásico de cabecera de formulario. */
+.doble-filete {
+  border-bottom: var(--canto-fuerte);
+  box-shadow: 0 3px 0 -2px var(--filete-fuerte);
+}
+
+.filete {
+  border-bottom: var(--canto);
+}
+
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Es una planilla: tiene que poder salir por la impresora y pegarse en el vestuario.
+   De paso, nada queda escondido detrás de una animación que en papel no corre. */
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .hoja {
+    max-width: none;
+    min-height: 0;
+    border: 0;
+    background: #fff;
+  }
+
+  .solapas,
+  .barra-pie,
+  .botonera,
+  .volver,
+  .boton,
+  .clavo,
+  .jugador__acciones,
+  .alta,
+  .regla-alta,
+  .enlace-copiable,
+  .pie {
+    display: none !important;
+  }
+
+  .pechera,
+  .pechera__jugador {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .pechera {
+    break-inside: avoid;
+  }
+
+  .pechera__cuello {
+    /* Que el color de la pechera salga sí o sí, aunque la impresora ahorre tinta. */
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,57 @@
+import { useEffect } from 'react';
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { ProveedorGrupos } from './estado/grupos';
+import Inicio from './rutas/Inicio';
+import MarcoGrupo from './rutas/MarcoGrupo';
+import Plantel from './rutas/Plantel';
+import Armar from './rutas/Armar';
+import Sorteo from './rutas/Sorteo';
+import Historial from './rutas/Historial';
+import Unirse from './rutas/Unirse';
+
+function AlPrincipio() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function NoExiste() {
+  return (
+    <div className="margen">
+      <header className="cabecera">
+        <h1 className="cabecera__titulo display">Afuera</h1>
+        <p className="cabecera__bajada">Esta dirección no existe. Volvé al inicio y arrancá de nuevo.</p>
+      </header>
+      <Link to="/" className="boton boton--principal">
+        Volver al inicio
+      </Link>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ProveedorGrupos>
+      <AlPrincipio />
+      <div className="hoja">
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/unirse" element={<Unirse />} />
+          <Route path="/g/:id" element={<MarcoGrupo />}>
+            <Route index element={<Plantel />} />
+            <Route path="armar" element={<Armar />} />
+            <Route path="sorteo" element={<Sorteo />} />
+            <Route path="historial" element={<Historial />} />
+          </Route>
+          <Route path="*" element={<NoExiste />} />
+        </Routes>
+
+        <footer className="pie margen">
+          <p className="etiqueta">Arma Tu Equipo</p>
+        </footer>
+      </div>
+    </ProveedorGrupos>
+  );
+}

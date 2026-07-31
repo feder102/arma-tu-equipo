@@ -1,0 +1,98 @@
+/*
+  Arma Tu Equipo — sistema visual "planilla".
+  Dos tintas: lo impreso (negro sobre papel de oficina verdoso) y lo escrito (birome azul).
+  Todo lo que carga el usuario va en azul; el formulario en sí, en negro.
+  El único color saturado aparece al final: las pecheras del sorteo.
+*/
+
+:root {
+  /* Papel */
+  --escritorio: #b9c1aa;
+  --papel: #e9ece1;
+  --papel-banda: #e0e4d6;
+  --papel-hondo: #d7dccb;
+
+  /* Tinta impresa */
+  --tinta: #15190f;
+  --tinta-2: #474e3f;
+  --tinta-3: #5e6555;
+  /* Filetes decorativos (renglones) y de control (bordes de cosas que se tocan,
+     que tienen que llegar a 3:1 contra el papel para verse de verdad). */
+  --filete: #a7b098;
+  --filete-activo: #7f886f;
+  --filete-fuerte: #15190f;
+
+  /* Tinta escrita */
+  --birome: #1b3aa0;
+  --birome-2: #4058b8;
+  --birome-fondo: #dde1f0;
+
+  /* Sello */
+  --sello: #a8342a;
+  --sello-fondo: #f0e0dd;
+
+  /* Tipografía */
+  --fuente-display: 'Archivo Variable', 'Arial Narrow', system-ui, sans-serif;
+  --fuente-texto: 'Archivo Variable', system-ui, -apple-system, sans-serif;
+  --fuente-dato: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* Escala con al menos 1.25 entre escalones, para que la jerarquía se lea sola. */
+  --t-titulo: clamp(2.5rem, 12vw, 4.5rem);
+  --t-seccion: clamp(1.5rem, 6vw, 2rem);
+  --t-rubro: 1.25rem;
+  --t-cuerpo: 1rem;
+  --t-nota: 0.875rem;
+  --t-dato: 0.8125rem;
+  --t-etiqueta: 0.6875rem;
+
+  /* Ancho máximo de párrafo: más largo que esto cuesta seguir el renglón. */
+  --renglon: 68ch;
+
+  /* Espacio */
+  --e1: 0.25rem;
+  --e2: 0.5rem;
+  --e3: 0.75rem;
+  --e4: 1rem;
+  --e5: 1.5rem;
+  --e6: 2rem;
+  --e7: 3rem;
+  --e8: 4rem;
+
+  --hoja: 780px;
+  --canto: 1px solid var(--filete);
+  --canto-fuerte: 2px solid var(--filete-fuerte);
+
+  --anim: 180ms cubic-bezier(0.2, 0, 0.1, 1);
+}
+
+/* El renglón del formulario: mayúscula condensada, muy apretada. */
+.display {
+  font-family: var(--fuente-display);
+  font-stretch: 70%;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: 0.004em;
+}
+
+/* Los rótulos chiquitos impresos arriba de cada campo. */
+.etiqueta {
+  font-family: var(--fuente-dato);
+  font-size: var(--t-etiqueta);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--tinta-3);
+}
+
+/* Números: siempre monoespaciados y tabulares, como en un marcador. */
+.dato {
+  font-family: var(--fuente-dato);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-dato);
+}
+
+/* Lo que escribió el usuario. */
+.escrito {
+  color: var(--birome);
+}
