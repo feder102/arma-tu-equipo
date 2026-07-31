@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     # Sólo escucha en localhost del VPS: quien atiende afuera es Caddy.
     ports:
-      - '127.0.0.1:8080:80'
+      - '127.0.0.1:8080:3000'
 
   caddy:
     image: caddy:2-alpine
