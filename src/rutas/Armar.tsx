@@ -79,7 +79,7 @@ export default function Armar() {
       <Resumen
         campos={[
           { rotulo: 'Vienen hoy', valor: anotados.length },
-          { rotulo: 'Equipos de', valor: tamanos.length ? tamanos.join(' · ') : '—' },
+          { rotulo: 'Equipos de', valor: tamanos.length ? tamanos.join(' y ') : '—' },
           { rotulo: 'Nivel promedio', valor: anotados.length ? formatearNivel(promedio) : '—' },
         ]}
       />
@@ -113,11 +113,15 @@ export default function Armar() {
                   onClick={() => alternar(j.id)}
                 >
                   <span className="anotado__casilla" aria-hidden="true">
-                    {viene ? '✓' : ''}
+                    {viene && (
+                      <svg viewBox="0 0 16 16">
+                        <path d="m3 8.5 3.2 3L13 4.5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
                   </span>
                   <span className="anotado__nombre">{j.nombre}</span>
                   {/* La celda va siempre, aunque esté vacía, para que las columnas se alineen. */}
-                  <span className="anotado__arq">{j.arquero ? 'ARQ' : ''}</span>
+                  {j.arquero ? <span className="ficha-arq">ataja</span> : <span />}
                   <span className="anotado__nivel">{j.nivel}</span>
                 </button>
               </li>

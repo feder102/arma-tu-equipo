@@ -34,8 +34,8 @@ export default function MarcoGrupo() {
     if (compartido) return <SorteoInvitado sorteo={compartido} codigoGrupo={id ?? ''} />;
 
     return (
-      <div className="margen">
-        <header className="cabecera">
+      <div>
+        <header className="banda cabecera cabecera--banda margen">
           <h1 className="cabecera__titulo display">No está</h1>
           <p className="cabecera__bajada">
             Esta planilla no vive en este navegador. La creó otra persona en su teléfono, y los datos no
@@ -46,9 +46,11 @@ export default function MarcoGrupo() {
             <code>#</code> con un texto largo después. WhatsApp a veces los recorta.
           </p>
         </header>
-        <Link to="/" className="boton boton--principal">
-          Volver al inicio
-        </Link>
+        <div className="margen">
+          <Link to="/" className="boton boton--principal">
+            Volver al inicio
+          </Link>
+        </div>
       </div>
     );
   }

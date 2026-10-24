@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useGrupos, type ModoImportacion } from '../estado/grupos';
-import { Resumen, Seccion, Sello, formatearNivel } from '../componentes/Piezas';
+import { Entrada, Resumen, Seccion, formatearNivel } from '../componentes/Piezas';
 import { decodificarGrupo, payloadDelHash } from '../lib/compartir';
 
 export default function Unirse() {
@@ -43,10 +43,10 @@ export default function Unirse() {
 
   return (
     <>
-      <header className="cabecera margen">
+      <header className="banda cabecera cabecera--banda margen">
         <div className="cabecera__marca">
           <h1 className="cabecera__titulo display">Te pasaron {entrante.nombre}</h1>
-          <Sello codigo={entrante.id} />
+          <Entrada codigo={entrante.id} />
         </div>
       </header>
 
@@ -63,9 +63,9 @@ export default function Unirse() {
           <ul className="lista-nombres">
             {entrante.jugadores.map((j, i) => (
               <li key={j.id} className="lista-nombres__fila">
-                <span className="jugador__numero">{String(i + 1).padStart(2, '0')}</span>
+                <span className="lista-nombres__numero">{i + 1}</span>
                 <span className="escrito">{j.nombre}</span>
-                {j.arquero && <span className="anotado__arq">ARQ</span>}
+                {j.arquero ? <span className="ficha-arq">ataja</span> : <span />}
                 <span className="anotado__nivel">{j.nivel}</span>
               </li>
             ))}

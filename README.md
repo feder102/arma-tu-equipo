@@ -160,30 +160,28 @@ src/
 │  ├─ tipos.ts        Jugador, Grupo, Partido, Regla
 │  └─ id.ts           Códigos de grupo sin caracteres confusos
 ├─ estado/grupos.tsx  Contexto de React con los grupos guardados
-├─ componentes/       Piezas del formulario
+├─ componentes/       Piezas de la interfaz (cancha, pecheras, plantel)
 ├─ rutas/             Inicio, Plantel, Armar, Sorteo, Historial, Unirse
 └─ estilos/           tokens · base · componentes
 ```
 
 ## El diseño
 
-La app está armada como **la planilla del fútbol de los martes**: un formulario impreso a una tinta
-sobre papel verdoso de oficina, completado a mano con birome azul.
+La app está pensada como **la cancha de 5 de los martes**: el sintético cortado en franjas, las
+líneas de cal, las pecheras que se reparten antes de arrancar y las tarjetas del árbitro. El contrato
+completo (colores, tipografías, radios y qué no hacer) está en [`DESIGN.md`](DESIGN.md).
 
-De ahí salen las dos capas que ordenan toda la interfaz: lo **impreso** (negro, condensada, filetes
-finos, renglones numerados) es el formulario, y lo **escrito** (azul birome) es todo lo que carga el
-usuario. El único color saturado aparece una sola vez, al final: cuando sale el sorteo, los equipos
-son **pecheras**.
+- **Césped** es el color que manda: la banda de arriba de cada pantalla, la cancha del sorteo y la
+  acción principal. El contenido se lee sobre **cal**, un blanco frío.
+- **Amarilla y roja** funcionan como tarjetas: la amarilla avisa y marca al arquero, la roja borra.
+- **Big Shoulders Display** (letra de cartel de estadio) para títulos, dorsales y marcadores;
+  **Archivo** para el texto.
+- **El sorteo se dibuja en una cancha**: con dos equipos, cada uno se para en su mitad, en formación,
+  con una camiseta del color de su pechera y el dorsal en el pecho. Abajo, el nivel promedio de cada
+  equipo se lee como el marcador de la tele.
+- **Se imprime**: la hoja de impresión saca navegación, botones y la cancha, y respeta el color de
+  las pecheras para pegar la lista en el vestuario.
 
-Consecuencias prácticas de tratarla como una planilla:
-
-- Se escribe encima. El nombre del grupo y los de los jugadores son campos editables en su lugar, sin
-  modo edición ni diálogos.
-- Se lee en columnas. El nivel y las acciones caen siempre en la misma vertical, fila tras fila.
-- **Se imprime.** Hay una hoja de estilos de impresión: sale sin navegación ni botones, con los
-  colores de las pecheras respetados, para pegar en el vestuario.
-
-La interfaz está auditada contra el ruleset de [impeccable.style](https://impeccable.style/slop):
-nada de texto por debajo de 11px, contraste AA verificado en todas las rutas, prosa acotada a 68
-caracteres por renglón, jerarquía tipográfica con al menos 1.25 entre escalones, sin animar
-propiedades de layout y sin barras de acento decorativas.
+La interfaz se auditó con la skill [avoid-ai-design](https://github.com/funboy322/avoid-ai-design):
+el escáner no encuentra ningún patrón de diseño genérico, el texto pasa contraste AA y respeta
+`prefers-reduced-motion`.
