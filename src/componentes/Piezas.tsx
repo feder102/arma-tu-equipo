@@ -2,22 +2,19 @@ import { useCallback, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 
 /**
- * El sello del código del grupo — la firma de la casa.
- *
- * Estampado a mano sobre el papel, como el cuño rojo de secretaría o el sello
- * del club en la boleta de inscripción. Es lo que hace que este grupo sea ESTE
- * grupo y no otro; cuando alguien te pide el código, este es el número que dicta.
+ * El código del grupo, impreso como una entrada de cancha con su troquel.
+ * Cuando alguien te pide el código, éste es el que dictás.
  */
-export function Sello({ codigo }: { codigo: string }) {
+export function Entrada({ codigo }: { codigo: string }) {
   return (
-    <div className="sello" title={`Código del grupo: ${codigo}`}>
-      <span className="sello__rotulo">Código del grupo</span>
-      <span className="sello__codigo">{codigo}</span>
+    <div className="entrada" title={`Código del grupo: ${codigo}`}>
+      <span className="entrada__rotulo">código</span>
+      <span className="entrada__codigo display">{codigo}</span>
     </div>
   );
 }
 
-/** Diez casilleros para marcar cuánto juega. Se marca hasta donde tocás. */
+/** Diez barras que suben como la tribuna: se marca hasta donde tocás. */
 export function Nivel({
   valor,
   onCambio,
@@ -74,10 +71,10 @@ export function Seccion({
 }) {
   return (
     <section className="seccion">
-      <h2 className="seccion__titulo">
-        {titulo}
-        {cuenta !== undefined && <span className="seccion__cuenta">{cuenta}</span>}
-      </h2>
+      <div className="seccion__cabeza">
+        <h2 className="seccion__titulo display">{titulo}</h2>
+        {cuenta !== undefined && <div className="seccion__cuenta">{cuenta}</div>}
+      </div>
       {children}
     </section>
   );

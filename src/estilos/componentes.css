@@ -1,292 +1,341 @@
-/* ═══════════════════════════════════════════════════════════════════════════
-   TAPA — la portada de la app (home)
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Banda de césped: la cabecera de cada pantalla ──────────────────────────
+   El pasto cortado en franjas, con texto en cal. Es el único bloque grande de
+   color de la app hasta que aparece la cancha del sorteo. */
+
+.banda {
+  position: relative;
+  overflow: hidden;
+  background: var(--pasto) var(--cesped);
+  color: var(--tinta-sobre-verde);
+}
+
+.banda a,
+.banda .volver {
+  color: var(--tinta-sobre-verde-2);
+}
+
+/* ─── Tapa de la home ───────────────────────────────────────────────────── */
 
 .tapa {
-  padding-top: var(--e7);
-  padding-bottom: var(--e5);
+  padding-top: var(--e8);
+  padding-bottom: var(--e7);
+}
+
+.tapa__interior {
+  position: relative;
 }
 
 .tapa__titulo {
   font-size: var(--t-tapa);
-  margin: 0;
-  color: var(--tinta);
-}
-
-/* La segunda línea del título subrayada con canario: la línea de cal del arco. */
-.tapa__subrayado {
-  background-image: linear-gradient(to top, var(--canario) 0, var(--canario) 0.28em, transparent 0.28em);
-  background-repeat: no-repeat;
-  padding: 0 0.08em;
+  font-weight: 900;
+  line-height: 0.82;
+  text-transform: uppercase;
+  color: var(--tinta-sobre-verde);
 }
 
 .tapa__bajada {
-  margin-top: var(--e4);
-  max-width: 42ch;
-  color: var(--tinta-2);
+  margin-top: var(--e5);
+  max-width: 34ch;
+  color: var(--tinta-sobre-verde-2);
   font-size: 1.0625rem;
-  line-height: 1.55;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   CABECERA DE GRUPO — la tapa de la planilla
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* El área grande dibujada con cal, asomando desde la esquina como si la
+   pantalla fuera un pedazo de cancha. */
+.tapa__cal {
+  position: absolute;
+  top: 0;
+  right: -40px;
+  width: min(62%, 340px);
+  height: auto;
+  color: rgba(243, 245, 239, 0.55);
+  pointer-events: none;
+}
+
+/* ─── Cabecera de grupo ─────────────────────────────────────────────────── */
 
 .cabecera-grupo {
-  position: relative;
-  padding-bottom: var(--e5);
-  background:
-    linear-gradient(to bottom, var(--papel-banda), transparent 60%),
-    var(--papel);
+  padding-bottom: 0;
 }
 
-/* Cinta superior: el renglón de servicio con la vuelta y el dato del grupo. */
+.cabecera-grupo--suelta {
+  padding-bottom: var(--e6);
+}
+
 .cabecera-grupo__cinta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--e3);
-  padding-block: var(--e3);
-  color: var(--tinta-3);
+  flex-wrap: wrap;
+  gap: var(--e2) var(--e4);
+  padding-block: var(--e4) var(--e2);
 }
 
 .cabecera-grupo__linea {
-  color: var(--tinta-2);
+  font-size: var(--t-nota);
+  color: var(--tinta-sobre-verde-2);
 }
 
 .cabecera-grupo__tapa {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  align-items: flex-end;
+  align-items: end;
   gap: var(--e4) var(--e5);
-  padding-top: var(--e2);
+  padding-top: var(--e4);
 }
 
-@media (max-width: 640px) {
+.cabecera-grupo__antetitulo {
+  font-size: var(--t-nota);
+  font-weight: 600;
+  color: var(--tinta-sobre-verde-2);
+  margin-bottom: var(--e2);
+}
+
+@media (max-width: 560px) {
   .cabecera-grupo__tapa {
-    grid-template-columns: 1fr;
-    align-items: flex-start;
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  /* En mobile el sello vuelve a su tamaño de cuño chico, no full-width. */
-  .cabecera-grupo__tapa .sello {
-    align-self: flex-start;
-    margin-top: var(--e2);
+  .cabecera-grupo__tapa .entrada {
+    justify-self: start;
   }
 }
 
-/* El título del grupo se escribe directo sobre la tapa, sin caja. */
+/* El nombre del grupo se escribe directo sobre el pasto, sin caja. */
 .titulo-editable {
   display: block;
   width: 100%;
   border: 0;
+  border-radius: var(--r-control);
   background: transparent;
-  padding: 0;
+  padding: 2px 0;
   margin: 0;
   font-family: var(--fuente-display);
-  font-stretch: 62%;
-  font-weight: 850;
+  font-weight: 900;
   text-transform: uppercase;
-  line-height: 0.85;
-  letter-spacing: -0.008em;
+  line-height: 0.88;
   font-size: var(--t-titulo);
-  color: var(--birome);
+  color: var(--tinta-sobre-verde);
   resize: none;
   overflow: hidden;
-  transition: color var(--anim);
+  transition: background var(--anim), box-shadow var(--anim);
 }
 
-.titulo-editable::placeholder {
-  color: var(--tinta-3);
+textarea.titulo-editable:hover {
+  background: rgba(243, 245, 239, 0.08);
+  box-shadow: 0 0 0 6px rgba(243, 245, 239, 0.08);
 }
 
-.titulo-editable:hover {
-  color: var(--birome-2);
-}
-
-.titulo-editable:focus {
+textarea.titulo-editable:focus {
   outline: none;
-  color: var(--birome-2);
+  background: rgba(243, 245, 239, 0.12);
+  box-shadow: 0 0 0 6px rgba(243, 245, 239, 0.12), 0 3px 0 6px var(--amarilla);
 }
 
 .volver {
-  color: var(--tinta-3);
-  text-decoration: none;
-  font-family: var(--fuente-dato);
-  font-size: var(--t-etiqueta);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  padding-block: 4px;
-  border-bottom: 1px solid transparent;
-  transition: color var(--anim), border-color var(--anim);
-}
-
-.volver::before {
-  content: '← ';
-}
-
-.volver:hover {
-  color: var(--tinta);
-  border-bottom-color: var(--tinta);
-}
-
-/* ─── Sello del código: la firma del grupo, cuño rojo sobre papel ─── */
-
-.sello {
-  position: relative;
-  flex: none;
-  transform: rotate(-3deg);
-  padding: 10px 16px 8px;
-  color: var(--sello);
-  background: var(--papel);
-  border: 2.5px solid var(--sello);
-  box-shadow:
-    inset 0 0 0 4px var(--papel),
-    inset 0 0 0 5px var(--sello);
-  text-align: center;
-}
-
-.sello__rotulo {
-  display: block;
-  font-family: var(--fuente-dato);
-  font-size: 0.625rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--t-nota);
   font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.85;
+  text-decoration: none;
+  padding: 6px 10px 6px 4px;
+  margin-left: -4px;
+  border-radius: var(--r-control);
+  transition: background var(--anim), color var(--anim);
 }
 
-.sello__codigo {
-  display: block;
-  margin-top: 2px;
-  font-family: var(--fuente-dato);
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: 0.14em;
+.volver__icono {
+  width: 16px;
+  height: 16px;
+}
+
+.banda .volver:hover {
+  color: var(--tinta-sobre-verde);
+  background: rgba(243, 245, 239, 0.12);
+}
+
+/* ─── Entrada: el código del grupo con su troquel ──────────────────────────
+   Las muescas de los costados se recortan con una máscara: se ve el pasto. */
+
+.entrada {
+  display: inline-grid;
+  justify-items: center;
+  padding: 8px 22px 10px;
+  background: var(--cal);
+  color: var(--tinta);
+  border-radius: 6px;
+  -webkit-mask: radial-gradient(circle 8px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 8px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 8px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 8px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  box-shadow: inset 0 0 0 2px var(--cal), inset 0 0 0 3px var(--linea-fuerte);
+}
+
+.entrada__rotulo {
+  font-size: var(--t-chico);
+  font-weight: 600;
+  color: var(--tinta-2);
+}
+
+.entrada__codigo {
+  font-size: 1.875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   SOLAPAS — la navegación entre las tres vistas del grupo
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Pestañas: la pestaña activa se funde con el fondo de cal ─────────── */
 
 .solapas {
   display: flex;
-  gap: 0;
+  gap: var(--e1);
   margin-top: var(--e5);
-  border-bottom: 2px solid var(--filete-fuerte);
   overflow-x: auto;
+  scrollbar-width: none;
 }
 
 .solapa {
   display: inline-flex;
   align-items: baseline;
-  gap: 6px;
-  padding: 12px 16px 10px;
-  color: var(--tinta-3);
+  gap: 8px;
+  padding: 12px 18px 12px;
+  color: var(--tinta-sobre-verde-2);
   text-decoration: none;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
+  border-radius: var(--r-control) var(--r-control) 0 0;
   white-space: nowrap;
-  transition: color var(--anim), border-color var(--anim);
+  transition: color var(--anim), background var(--anim);
 }
 
 .solapa__nombre {
   font-family: var(--fuente-display);
-  font-stretch: 68%;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  font-size: 1.0625rem;
+  font-size: 1.3125rem;
+  line-height: 1;
 }
 
 .solapa__cuenta {
-  color: var(--tinta-3);
-  font-weight: 500;
+  font-weight: 700;
+  font-size: var(--t-chico);
+  font-variant-numeric: tabular-nums;
+  min-width: 1.6em;
+  padding: 1px 6px;
+  text-align: center;
+  border-radius: var(--r-ficha);
+  background: rgba(243, 245, 239, 0.16);
 }
 
-.solapa:hover {
-  color: var(--tinta);
+.banda .solapa:hover {
+  color: var(--tinta-sobre-verde);
+  background: rgba(243, 245, 239, 0.1);
 }
 
-.solapa[aria-current='page'] {
+.banda .solapa[aria-current='page'] {
   color: var(--tinta);
-  border-bottom-color: var(--tinta);
+  background: var(--cal);
 }
 
 .solapa[aria-current='page'] .solapa__cuenta {
-  color: var(--birome);
+  background: var(--amarilla);
+  color: var(--tinta);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   RESUMEN — el renglón de totales al pie de la cabecera
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Cabecera de páginas sueltas (404, link cortado, unirse) ───────────── */
+
+.cabecera {
+  margin-bottom: var(--e6);
+}
+
+.cabecera--banda {
+  padding-top: var(--e7);
+  padding-bottom: var(--e6);
+}
+
+.cabecera__marca {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--e4);
+}
+
+.cabecera__titulo {
+  font-size: var(--t-titulo);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: inherit;
+}
+
+.cabecera__bajada {
+  margin-top: var(--e4);
+  max-width: 48ch;
+  color: var(--tinta-sobre-verde-2);
+}
+
+.cabecera--banda .nota {
+  color: var(--tinta-sobre-verde-2);
+}
+
+.cabecera--banda code {
+  color: var(--amarilla);
+}
+
+/* ─── Resumen: los números del plantel, como la ficha técnica ──────────── */
 
 .resumen {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--e2) var(--e5);
+  gap: var(--e3) var(--e6);
   margin: 0;
-  padding-block: var(--e4) var(--e3);
-  border-bottom: 2px solid var(--filete-fuerte);
-  box-shadow: 0 3px 0 -2px var(--filete-fuerte);
+  padding-block: var(--e5) var(--e4);
 }
 
 .resumen__campo {
   display: flex;
-  align-items: baseline;
-  gap: var(--e2);
+  flex-direction: column-reverse;
+  gap: 2px;
 }
 
 .resumen__valor {
   margin: 0;
-  font-family: var(--fuente-dato);
+  font-family: var(--fuente-display);
+  font-weight: 800;
+  font-size: 2.25rem;
+  line-height: 0.9;
   font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  font-size: 1.25rem;
-  line-height: 1;
-  color: var(--birome);
+  color: var(--tinta);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   SECCIONES — cada bloque de contenido tiene su encabezado y su cuerpo
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Secciones ─────────────────────────────────────────────────────────── */
 
 .seccion {
   padding-top: var(--e7);
-  padding-bottom: var(--e2);
+}
+
+.seccion__cabeza {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--e1) var(--e3);
+  margin-bottom: var(--e4);
 }
 
 .seccion__titulo {
-  font-family: var(--fuente-display);
-  font-stretch: 68%;
-  font-weight: 850;
-  text-transform: uppercase;
-  letter-spacing: -0.005em;
   font-size: var(--t-seccion);
-  line-height: 0.95;
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: var(--e1) var(--e3);
-  padding-bottom: var(--e3);
-  margin: 0 0 var(--e4);
-  border-bottom: 2px solid var(--filete-fuerte);
+  text-transform: uppercase;
   color: var(--tinta);
 }
 
 .seccion__cuenta {
-  margin-left: auto;
-  font-family: var(--fuente-dato);
-  font-size: var(--t-dato);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  color: var(--tinta-3);
+  font-size: var(--t-nota);
+  color: var(--tinta-2);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   CAMPOS DEL FORMULARIO
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Campos ────────────────────────────────────────────────────────────── */
 
 .campo {
   display: block;
@@ -300,164 +349,125 @@
 
 .campo__rotulo {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
-.campo__entrada {
+.campo__entrada,
+.selector {
   display: block;
   width: 100%;
-  border: 0;
-  border-bottom: 1.5px solid var(--filete-activo);
-  background: transparent;
-  color: var(--birome);
-  padding: 6px 0 7px;
+  border: 1.5px solid var(--linea-fuerte);
+  border-radius: var(--r-control);
+  background: #fff;
+  color: var(--tinta);
+  padding: 11px 14px;
   font-size: 1.0625rem;
-  font-weight: 500;
-  transition: border-color var(--anim), background var(--anim);
+  transition: border-color var(--anim), box-shadow var(--anim);
 }
 
 .campo__entrada::placeholder {
-  color: var(--tinta-3);
-  font-weight: 400;
+  color: #5f7064;
 }
 
-.campo__entrada:hover {
-  border-bottom-color: var(--tinta-2);
+.campo__entrada:hover,
+.selector:hover {
+  border-color: var(--tinta-2);
 }
 
-.campo__entrada:focus {
+.campo__entrada:focus,
+.selector:focus {
   outline: none;
-  border-bottom-color: var(--birome);
-  background: linear-gradient(to top, var(--birome-fondo) 0, var(--birome-fondo) 2px, transparent 2px);
-}
-
-.campo__entrada--corto {
-  width: 3.5rem;
-  font-family: var(--fuente-dato);
-  font-variant-numeric: tabular-nums;
+  border-color: var(--cesped);
+  box-shadow: 0 0 0 3px var(--cesped-suave);
 }
 
 .selector {
-  border: 0;
-  border-bottom: 1.5px solid var(--filete-activo);
-  background: transparent;
-  color: var(--birome);
-  padding: 6px 0;
-  font-size: 1rem;
-  max-width: 100%;
+  padding-block: 10px;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   BOTONES
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Botones ───────────────────────────────────────────────────────────── */
 
 .boton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--e2);
+  min-height: 48px;
   font-family: var(--fuente-display);
-  font-stretch: 68%;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  font-size: 1.0625rem;
+  letter-spacing: 0.03em;
+  font-size: 1.25rem;
   line-height: 1;
-  padding: 14px 20px;
-  border: 1.5px solid var(--tinta);
+  padding: 12px 20px;
+  border: 2px solid var(--tinta);
+  border-radius: var(--r-control);
   background: transparent;
   color: var(--tinta);
   cursor: pointer;
   text-decoration: none;
-  transition: background var(--anim), color var(--anim), transform var(--anim), box-shadow var(--anim);
+  transition: background var(--anim), color var(--anim), border-color var(--anim), transform var(--anim);
 }
 
-.boton:hover {
-  background: var(--papel-hondo);
+.boton:hover:not(:disabled) {
+  background: var(--cal-2);
 }
 
-.boton:active {
+.boton:active:not(:disabled) {
   transform: translateY(1px);
 }
 
 .boton:disabled {
-  opacity: 0.4;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
 .boton--principal {
-  background: var(--tinta);
-  color: var(--papel);
-  border-color: var(--tinta);
-  box-shadow: 3px 3px 0 var(--filete);
+  background: var(--cesped);
+  border-color: var(--cesped);
+  color: var(--tinta-sobre-verde);
 }
 
 .boton--principal:hover:not(:disabled) {
-  background: var(--birome);
-  border-color: var(--birome);
-  box-shadow: 3px 3px 0 var(--filete-activo);
+  background: var(--cesped-hondo);
+  border-color: var(--cesped-hondo);
 }
 
-.boton--principal:active:not(:disabled) {
-  box-shadow: 1px 1px 0 var(--filete);
-  transform: translate(2px, 2px);
-}
-
-/* El botón "SORTEAR EQUIPOS": el gesto principal de la app, el silbato del árbitro. */
+/* "Sortear equipos": el pitazo. El botón más grande de la app, a todo el ancho. */
 .boton--sorteo {
   width: 100%;
-  font-size: clamp(1.75rem, 8vw, 2.5rem);
-  font-stretch: 62%;
+  min-height: 68px;
+  font-size: clamp(1.875rem, 8vw, 2.5rem);
   font-weight: 900;
-  letter-spacing: -0.005em;
-  padding: 22px 20px 20px;
-  background: var(--tinta);
-  color: var(--canario);
-  border-color: var(--tinta);
-  box-shadow: 4px 4px 0 var(--sello);
-}
-
-.boton--sorteo:hover:not(:disabled) {
-  background: var(--birome);
-  border-color: var(--birome);
-  color: var(--canario);
-  box-shadow: 4px 4px 0 var(--sello);
-}
-
-.boton--sorteo:active:not(:disabled) {
-  box-shadow: 2px 2px 0 var(--sello);
-  transform: translate(2px, 2px);
-}
-
-.boton--bloque {
-  width: 100%;
+  border-radius: var(--r-panel);
 }
 
 .boton--chico {
-  padding: 8px 12px;
-  font-size: 0.8125rem;
-  letter-spacing: 0.04em;
+  min-height: 44px;
+  padding: 8px 14px;
+  font-size: 1.0625rem;
 }
 
 .boton--pelado {
+  min-height: 36px;
   border-color: transparent;
-  padding: 7px 8px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--tinta-3);
-  background: transparent;
-  box-shadow: none;
+  padding: 6px 10px;
+  font-family: var(--fuente-texto);
+  font-size: var(--t-nota);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--tinta-2);
 }
 
-.boton--pelado:hover {
+.boton--pelado:hover:not(:disabled) {
   color: var(--tinta);
-  background: var(--papel-hondo);
+  background: var(--cal-2);
 }
 
-.boton--peligro:hover {
-  background: var(--sello-fondo);
-  color: var(--sello);
+.boton--peligro:hover:not(:disabled) {
+  background: var(--roja-suave);
+  color: var(--roja);
 }
 
 .botonera {
@@ -475,15 +485,12 @@
   align-items: center;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   OPCIONES — chips de selección (fútbol 5/7/11, cantidad de equipos, etc)
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Opciones: Fútbol 5/7/11, cantidad de equipos ──────────────────────── */
 
 .opciones {
   display: flex;
   flex-wrap: wrap;
   gap: var(--e2);
-  padding-top: var(--e2);
 }
 
 .opciones--sueltas {
@@ -491,140 +498,143 @@
 }
 
 .opcion {
-  font-family: var(--fuente-dato);
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 10px 14px;
-  border: 1.5px solid var(--filete-activo);
-  background: transparent;
-  color: var(--tinta-2);
+  min-height: 44px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 10px 16px;
+  border: 1.5px solid var(--linea-fuerte);
+  border-radius: var(--r-ficha);
+  background: #fff;
+  color: var(--tinta);
   cursor: pointer;
-  transition: all var(--anim);
+  transition: background var(--anim), border-color var(--anim), color var(--anim);
 }
 
 .opcion:hover {
   border-color: var(--tinta);
-  color: var(--tinta);
 }
 
 .opcion[aria-pressed='true'] {
-  background: var(--tinta);
-  border-color: var(--tinta);
-  color: var(--canario);
+  background: var(--cesped);
+  border-color: var(--cesped);
+  color: var(--tinta-sobre-verde);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   LISTA DE PLANILLAS (en la home)
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Tus planillas (home) ──────────────────────────────────────────────── */
 
 .planillas {
   display: grid;
-  gap: 0;
+  gap: var(--e2);
 }
 
 .planilla-fila {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: var(--e2) var(--e4);
-  padding-block: var(--e4);
-  border-bottom: 1px solid var(--filete);
+  gap: 2px var(--e4);
+  padding: var(--e4) var(--e4) var(--e4) var(--e5);
+  border-radius: var(--r-panel);
+  background: #fff;
+  border: 1.5px solid var(--linea);
   text-decoration: none;
   color: inherit;
-  transition: background var(--anim);
+  transition: border-color var(--anim), transform var(--anim);
 }
 
 .planilla-fila:hover {
-  background: var(--papel-banda);
+  border-color: var(--cesped);
 }
 
 .planilla-fila__nombre {
   grid-column: 1;
-  grid-row: 1;
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(1.625rem, 5vw, 2rem);
+  text-transform: uppercase;
   color: var(--tinta);
-  transition: color var(--anim);
-}
-
-.planilla-fila:hover .planilla-fila__nombre {
-  color: var(--birome);
 }
 
 .planilla-fila__detalle {
   grid-column: 1;
-  grid-row: 2;
-  color: var(--tinta-3);
-  letter-spacing: 0.02em;
+  font-size: var(--t-nota);
+  color: var(--tinta-2);
 }
 
-.planilla-fila__flecha {
+/* El formato de cancha, pintado como el cartel de la cancha de alquiler. */
+.planilla-fila__cancha {
   grid-column: 2;
   grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 10px;
+  background: var(--cesped);
+  color: var(--tinta-sobre-verde);
+  font-family: var(--fuente-display);
+  font-weight: 900;
   font-size: 1.5rem;
-  color: var(--tinta-3);
-  transition: color var(--anim), transform var(--anim);
+  transition: background var(--anim);
 }
 
-.planilla-fila:hover .planilla-fila__flecha {
-  color: var(--birome);
-  transform: translateX(4px);
+.planilla-fila:hover .planilla-fila__cancha {
+  background: var(--cesped-hondo);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   PLANTEL — la lista de jugadores del grupo
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Plantel ───────────────────────────────────────────────────────────── */
 
 .plantel-lista {
-  border-top: 1.5px solid var(--filete-activo);
   margin: 0;
+  border-top: 1.5px solid var(--linea);
 }
 
 .jugador {
   display: grid;
-  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
   align-items: center;
   column-gap: var(--e3);
   padding-block: var(--e3);
-  border-bottom: 1px solid var(--filete);
-  transition: background var(--anim);
+  border-bottom: 1.5px solid var(--linea);
 }
 
-.jugador:hover {
-  background: var(--papel-banda);
-}
-
-.jugador--baja {
+.jugador--baja .jugador__camiseta,
+.jugador--baja .jugador__nombre,
+.jugador--baja .jugador__nivel {
   opacity: 0.4;
 }
 
-/* El número de renglón como número de camiseta — grande, condensado, monospaced. */
-.jugador__numero {
+.jugador--baja .jugador__nombre {
+  text-decoration: line-through;
+}
+
+.jugador__camiseta {
   grid-column: 1;
   grid-row: 1 / span 2;
-  align-self: center;
-  font-size: 1.5rem;
-  color: var(--tinta-3);
-  font-variant-numeric: tabular-nums;
-  text-align: right;
+  width: 2.5rem;
 }
 
 .jugador__nombre {
   grid-column: 2;
   grid-row: 1;
   width: 100%;
-  border: 0;
-  background: transparent;
-  color: var(--birome);
-  font-weight: 600;
-  font-size: 1.125rem;
-  padding: 2px 0;
   min-width: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--tinta);
+  font-weight: 650;
+  font-size: 1.125rem;
+  padding: 3px 6px;
+  margin-left: -6px;
   transition: background var(--anim);
+}
+
+.jugador__nombre:hover {
+  background: var(--cal-2);
 }
 
 .jugador__nombre:focus {
   outline: none;
-  background: var(--birome-fondo);
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--cesped);
 }
 
 .jugador__acciones {
@@ -632,7 +642,7 @@
   grid-row: 1;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 }
 
 .jugador__nivel {
@@ -646,189 +656,166 @@
 
 @media (min-width: 720px) {
   .jugador {
-    grid-template-columns: 2.25rem minmax(6ch, 18ch) minmax(0, 1fr) auto;
+    grid-template-columns: 2.5rem minmax(6ch, 17ch) minmax(0, 1fr) auto;
+  }
+
+  .jugador__camiseta {
+    grid-row: 1;
   }
 
   .jugador__nivel {
     grid-column: 3;
     grid-row: 1;
     margin-top: 0;
-    justify-content: flex-start;
   }
 
   .jugador__acciones {
     grid-column: 4;
-    grid-row: 1;
   }
 }
 
-/* ─── Escala de nivel: diez cintas verticales, no diez casilleros ─── */
+/* ─── Nivel: diez barras que suben como la tribuna ───────────────────────── */
 
 .nivel {
   display: flex;
   gap: 3px;
-  align-items: stretch;
+  align-items: flex-end;
+  height: 32px;
 }
 
 .nivel__casillero {
-  width: 14px;
-  height: 28px;
+  width: 15px;
   padding: 0;
-  border: 1px solid var(--filete-activo);
-  background: transparent;
+  border: 0;
+  border-radius: 3px;
+  background: var(--cal-3);
   cursor: pointer;
-  transition: background var(--anim), border-color var(--anim), transform var(--anim);
+  transition: background var(--anim);
 }
 
+/* Cada barra un poco más alta que la anterior. */
+.nivel__casillero:nth-child(1) { height: 35%; }
+.nivel__casillero:nth-child(2) { height: 42%; }
+.nivel__casillero:nth-child(3) { height: 49%; }
+.nivel__casillero:nth-child(4) { height: 56%; }
+.nivel__casillero:nth-child(5) { height: 63%; }
+.nivel__casillero:nth-child(6) { height: 70%; }
+.nivel__casillero:nth-child(7) { height: 77%; }
+.nivel__casillero:nth-child(8) { height: 84%; }
+.nivel__casillero:nth-child(9) { height: 92%; }
+.nivel__casillero:nth-child(10) { height: 100%; }
+
 .nivel__casillero:hover {
-  border-color: var(--birome);
-  background: var(--birome-fondo);
+  background: var(--linea-fuerte);
 }
 
 .nivel__casillero[data-marcado='si'] {
-  background: var(--birome);
-  border-color: var(--birome);
+  background: var(--cesped-claro);
 }
 
-/* El casillero exacto del nivel actual es un poco más alto — el pico del VU-meter. */
 .nivel__casillero[aria-pressed='true'] {
-  background: var(--tinta);
-  border-color: var(--tinta);
-  transform: scaleY(1.12);
+  background: var(--cesped-hondo);
 }
 
 .nivel__valor {
-  font-family: var(--fuente-dato);
-  font-size: 1rem;
-  font-weight: 700;
+  font-family: var(--fuente-display);
+  font-size: 1.625rem;
+  font-weight: 800;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
-  color: var(--birome);
+  color: var(--tinta);
   min-width: 2ch;
 }
 
-/* ─── Marcas: los toggles "Arq" y "Baja" del renglón de jugador ─── */
+/* ─── Marcas del renglón: Ataja / Baja / borrar ─────────────────────────── */
 
-.marca {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 4px;
-  padding: 6px 8px;
-  border: 1px solid var(--filete);
-  background: transparent;
-  color: var(--tinta-3);
-  cursor: pointer;
-  transition: all var(--anim);
-}
-
-.marca__glifo {
-  font-family: var(--fuente-display);
-  font-stretch: 68%;
-  font-weight: 850;
-  font-size: 1rem;
-  line-height: 1;
-}
-
-.marca__rotulo {
-  font-family: var(--fuente-dato);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.marca:hover {
-  border-color: var(--tinta);
-  color: var(--tinta);
-}
-
-.marca[aria-pressed='true'] {
-  background: var(--tinta);
-  border-color: var(--tinta);
-  color: var(--canario);
-}
-
-/* Tachar del plantel: el cruz de bolígrafo sobre el nombre en la planilla vieja. */
-.tachar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--tinta-3);
-  font-family: var(--fuente-display);
-  font-weight: 700;
-  font-size: 1.375rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: all var(--anim);
-}
-
-.tachar:hover {
-  color: var(--sello);
-  background: var(--sello-fondo);
-}
-
-.tachar--confirma {
-  color: var(--sello);
-  background: var(--sello-fondo);
-  border: 1px solid var(--sello);
-  font-size: 0.9rem;
-  font-family: var(--fuente-dato);
-  font-weight: 700;
-}
-
-/* ─── Insignia genérica (se usa en las alertas y la tarjeta de importar) ─── */
-
+.marca,
 .insignia {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 8px;
-  border: 1px solid var(--filete-activo);
-  background: transparent;
-  color: var(--tinta-3);
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 1.5px solid var(--linea-fuerte);
+  border-radius: var(--r-ficha);
+  background: #fff;
+  color: var(--tinta-2);
+  font-size: var(--t-chico);
+  font-weight: 650;
   cursor: pointer;
-  font-family: var(--fuente-dato);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: all var(--anim);
+  transition: background var(--anim), border-color var(--anim), color var(--anim);
 }
 
+.marca:hover,
 .insignia:hover {
   border-color: var(--tinta);
   color: var(--tinta);
 }
 
+.marca[aria-pressed='true'],
 .insignia[aria-pressed='true'] {
-  background: var(--tinta);
-  border-color: var(--tinta);
-  color: var(--canario);
+  background: var(--amarilla);
+  border-color: var(--amarilla);
+  color: var(--tinta);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   ALTA — el mini-formulario para sumar un jugador al plantel
-   ═══════════════════════════════════════════════════════════════════════════ */
+.tachar {
+  display: inline-grid;
+  place-items: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border: 1.5px solid transparent;
+  border-radius: var(--r-ficha);
+  background: transparent;
+  color: var(--tinta-2);
+  font-size: var(--t-chico);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--anim), color var(--anim);
+}
+
+.tachar svg {
+  width: 16px;
+  height: 16px;
+}
+
+.tachar:hover {
+  color: var(--roja);
+  background: var(--roja-suave);
+}
+
+/* Segundo toque: la roja. */
+.tachar--confirma,
+.tachar--confirma:hover {
+  color: #fff;
+  background: var(--roja);
+}
+
+.ficha-arq {
+  justify-self: center;
+  font-size: var(--t-chico);
+  font-weight: 650;
+  padding: 1px 8px;
+  border-radius: var(--r-ficha);
+  background: var(--amarilla);
+  color: var(--tinta);
+}
+
+/* ─── Alta de jugador ───────────────────────────────────────────────────── */
 
 .alta {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--e3);
+  gap: var(--e4) var(--e3);
   align-items: end;
-  padding: var(--e4) var(--e4);
-  background: var(--papel-banda);
-  border: 1px solid var(--filete);
-  margin-top: var(--e2);
+  padding: var(--e4);
+  background: var(--cal-2);
+  border-radius: var(--r-panel);
 }
 
 .alta__nivel {
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  gap: var(--e4);
+  gap: var(--e3) var(--e4);
   flex-wrap: wrap;
 }
 
@@ -837,47 +824,47 @@
   margin: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   ANOTADOS — la lista de "quién juega hoy" (checkboxes)
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── ¿Quién juega hoy? ─────────────────────────────────────────────────── */
 
 .anotado {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) 3.5rem 2.5ch;
+  grid-template-columns: auto minmax(0, 1fr) 4rem 2.5ch;
   align-items: center;
   gap: var(--e3);
-  padding-block: 2px;
-  border-bottom: 1px solid var(--filete);
-  cursor: pointer;
   width: 100%;
-  text-align: left;
+  padding: 4px 6px;
+  border: 0;
+  border-bottom: 1.5px solid var(--linea);
   background: transparent;
-  border-inline: 0;
-  border-top: 0;
+  text-align: left;
+  cursor: pointer;
   transition: background var(--anim);
 }
 
 .anotado:hover {
-  background: var(--papel-banda);
+  background: var(--cal-2);
 }
 
 .anotado__casilla {
-  flex: none;
-  width: 24px;
-  height: 24px;
-  border: 1.5px solid var(--tinta-2);
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--linea-fuerte);
+  border-radius: 7px;
   display: grid;
   place-items: center;
-  color: var(--birome);
-  font-weight: 700;
-  font-size: 1.125rem;
-  line-height: 1;
+  background: #fff;
+  color: var(--tinta-sobre-verde);
+  transition: background var(--anim), border-color var(--anim);
+}
+
+.anotado__casilla svg {
+  width: 16px;
+  height: 16px;
 }
 
 .anotado[aria-pressed='true'] .anotado__casilla {
-  border-color: var(--birome);
-  background: var(--birome);
-  color: var(--canario);
+  border-color: var(--cesped);
+  background: var(--cesped);
 }
 
 .anotado__nombre {
@@ -886,49 +873,170 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 1.0625rem;
-  color: var(--tinta-3);
   padding-block: 12px;
-}
-
-.anotado[aria-pressed='true'] .anotado__nombre {
-  color: var(--birome);
-  font-weight: 600;
-}
-
-.anotado__nivel {
-  font-family: var(--fuente-dato);
-  font-size: 1rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  color: var(--birome);
-  text-align: right;
-}
-
-.anotado__arq {
-  font-family: var(--fuente-dato);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--tinta-3);
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.anotado__arq:not(:empty) {
-  border: 1px solid var(--filete);
-  padding: 3px 5px 2px;
   color: var(--tinta-2);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   PECHERAS — el momento hero: el pizarrón del vestuario después del sorteo
-   ═══════════════════════════════════════════════════════════════════════════ */
+.anotado[aria-pressed='true'] .anotado__nombre {
+  color: var(--tinta);
+  font-weight: 650;
+}
+
+.anotado__nivel {
+  font-family: var(--fuente-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ─── La cancha del sorteo ──────────────────────────────────────────────── */
+
+.cancha-sorteo {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  max-width: 460px;
+  margin: var(--e2) auto 0;
+  border-radius: var(--r-panel);
+  overflow: hidden;
+  background: repeating-linear-gradient(
+      0deg,
+      var(--cesped) 0,
+      var(--cesped) 10%,
+      var(--cesped-claro) 10%,
+      var(--cesped-claro) 20%
+    )
+    var(--cesped);
+}
+
+.cancha-sorteo__lineas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(243, 245, 239, 0.7);
+}
+
+.cancha-sorteo__jugador {
+  position: absolute;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: 24%;
+  transform: translate(-50%, -50%);
+  animation: salir 420ms cubic-bezier(0.2, 0, 0, 1) both;
+  animation-delay: calc(var(--orden, 0) * 40ms);
+}
+
+.cancha-sorteo__jugador .camiseta {
+  width: clamp(30px, 9vw, 44px);
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+}
+
+.cancha-sorteo__nombre {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 1px 6px;
+  border-radius: var(--r-ficha);
+  background: rgba(14, 33, 22, 0.72);
+  color: var(--tinta-sobre-verde);
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.camiseta {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.camiseta__dorsal {
+  font-family: var(--fuente-display);
+  font-weight: 800;
+  font-size: 15px;
+}
+
+@keyframes salir {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ─── Marcador: el nivel promedio de cada equipo, como el de la tele ────── */
+
+.marcador {
+  margin: var(--e5) auto 0;
+  max-width: 460px;
+}
+
+.marcador__tablero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--r-control);
+  background: var(--tinta);
+}
+
+.marcador__casilla {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 0;
+  min-width: 8rem;
+}
+
+.marcador__equipo {
+  display: grid;
+  place-items: center;
+  min-width: 3.75rem;
+  padding: 8px 10px;
+  background: var(--tela);
+  color: var(--tinta-pechera);
+  font-size: 1.375rem;
+  text-transform: uppercase;
+}
+
+.marcador__valor {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 8px 12px;
+  color: var(--tinta-sobre-verde);
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.marcador__lectura {
+  margin-top: var(--e3);
+  text-align: center;
+  color: var(--tinta-2);
+  font-size: var(--t-nota);
+}
+
+.marcador__veredicto {
+  color: var(--tinta);
+}
+
+.marcador__veredicto--clavado {
+  color: var(--cesped);
+}
+
+/* ─── Pecheras: la lista de cada equipo ─────────────────────────────────── */
 
 .pecheras {
   display: grid;
-  gap: var(--e5);
+  gap: var(--e4);
   grid-template-columns: 1fr;
-  padding-top: var(--e3);
+  margin-top: var(--e6);
 }
 
 @media (min-width: 680px) {
@@ -938,405 +1046,367 @@
 }
 
 .pechera {
-  background: var(--papel);
-  border: 2px solid var(--tinta);
-  box-shadow: 5px 5px 0 var(--filete-activo);
   display: flex;
   flex-direction: column;
-  animation: entrar 240ms cubic-bezier(0.2, 0, 0.1, 1) both;
-  animation-delay: calc(var(--orden, 0) * 70ms);
+  overflow: hidden;
+  border-radius: var(--r-panel);
+  background: #fff;
+  border: 1.5px solid var(--linea);
 }
 
-/* El cuello de la pechera: la banda de color con el nombre del equipo. */
 .pechera__cuello {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--e3);
+  padding: var(--e4) var(--e4) var(--e3);
   background: var(--tela);
   color: var(--tinta-pechera);
-  padding: var(--e4) var(--e4) var(--e3);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--e2) var(--e3);
-  align-items: end;
-}
-
-.pechera__rotulo {
-  grid-column: 1;
-  grid-row: 1;
-  font-family: var(--fuente-dato);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.7;
+  border-bottom: 1.5px solid rgba(14, 33, 22, 0.15);
 }
 
 .pechera__nombre {
-  grid-column: 1;
-  grid-row: 2;
-  margin: 0;
-  font-size: clamp(2rem, 6vw, 2.75rem);
-  color: var(--tinta-pechera);
+  font-size: clamp(2.25rem, 7vw, 2.75rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: inherit;
 }
 
 .pechera__promedio {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  margin: 0;
-  text-align: right;
-  align-self: end;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
 }
 
 .pechera__promedio-r {
-  display: block;
-  font-family: var(--fuente-dato);
-  font-size: 0.6875rem;
+  font-size: var(--t-chico);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  opacity: 0.7;
 }
 
 .pechera__promedio-v {
-  display: block;
-  margin-top: 2px;
-  font-family: var(--fuente-display);
-  font-stretch: 68%;
-  font-weight: 850;
-  font-size: 2.25rem;
-  line-height: 0.9;
+  font-size: 2rem;
   font-variant-numeric: tabular-nums;
 }
 
 .pechera__lista {
   margin: 0;
-  padding: var(--e2) var(--e4) var(--e3);
-  list-style: none;
+  padding: var(--e1) var(--e4) var(--e2);
 }
 
 .pechera__jugador {
   display: grid;
-  grid-template-columns: 2.5rem minmax(0, 1fr) auto auto auto;
-  gap: var(--e2) var(--e3);
-  align-items: baseline;
-  padding-block: 10px;
-  border-bottom: 1px solid var(--filete);
-  animation: escribir 180ms ease-out both;
-  animation-delay: calc(80ms + var(--orden, 0) * 60ms + var(--linea, 0) * 22ms);
+  grid-template-columns: 2rem minmax(0, 1fr) auto auto;
+  gap: var(--e3);
+  align-items: center;
+  padding-block: 8px;
+  border-bottom: 1px solid var(--linea);
 }
 
 .pechera__jugador:last-child {
   border-bottom: 0;
 }
 
-/* El dorsal: el número al costado del apellido, como en la lista de convocados. */
-.pechera__dorsal {
-  font-family: var(--fuente-display);
-  font-stretch: 62%;
-  font-weight: 850;
-  font-size: 1.625rem;
-  line-height: 0.9;
-  color: var(--tinta);
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-}
-
-/* El arquero: dorsal con canario detrás, como en la revista. */
-.pechera__jugador--arq .pechera__dorsal {
-  background: var(--canario);
-  color: var(--tinta);
-  padding: 2px 6px;
-  margin-right: -2px;
-  border-radius: 1px;
-}
-
 .pechera__apellido {
-  color: var(--tinta);
-  font-weight: 600;
-  font-size: 1.0625rem;
+  display: flex;
+  align-items: baseline;
+  gap: var(--e2);
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-weight: 650;
+  font-size: 1.0625rem;
 }
 
 .pechera__arq {
-  font-family: var(--fuente-dato);
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--tinta-3);
+  font-size: var(--t-chico);
+  font-weight: 600;
+  color: var(--tinta-2);
 }
 
 .pechera__nivel {
-  font-family: var(--fuente-dato);
-  font-size: 0.9375rem;
-  font-weight: 700;
+  font-family: var(--fuente-display);
+  font-size: 1.375rem;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
-  color: var(--birome);
   min-width: 2ch;
   text-align: right;
 }
 
-/* El "fijo" — bajo perfil, sólo grita cuando está clavado. */
+/* "Fijar": en reposo queda en segundo plano; clavado, se pone la amarilla. */
 .clavo {
-  font-family: var(--fuente-dato);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  border: 0;
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 1.5px solid var(--linea);
+  border-radius: var(--r-ficha);
   background: transparent;
-  color: var(--tinta-3);
-  padding: 6px 6px;
+  color: var(--tinta-2);
+  font-size: var(--t-chico);
+  font-weight: 600;
   cursor: pointer;
-  opacity: 0.35;
-  transition: opacity var(--anim), color var(--anim);
-}
-
-.pechera__jugador:hover .clavo {
-  opacity: 1;
+  transition: background var(--anim), border-color var(--anim), color var(--anim);
 }
 
 .clavo:hover {
+  border-color: var(--tinta);
   color: var(--tinta);
 }
 
 .clavo[aria-pressed='true'] {
-  opacity: 1;
-  color: var(--sello);
+  background: var(--amarilla);
+  border-color: var(--amarilla);
+  color: var(--tinta);
+}
+
+/* ─── Cómo funciona (home) ──────────────────────────────────────────────── */
+
+.pasos {
+  margin: 0;
+  padding: 0;
+}
+
+.pasos__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--e1);
+  padding-block: var(--e4);
+  border-bottom: 1.5px solid var(--linea);
+}
+
+.pasos__item:first-child {
+  padding-top: 0;
+}
+
+@media (min-width: 600px) {
+  .pasos__item {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: var(--e5);
+  }
+}
+
+/* El momento del partido en que pasa cada cosa: es la secuencia, sin numeritos. */
+.pasos__momento {
+  font-family: var(--fuente-display);
+  font-weight: 800;
+  font-size: 1.375rem;
+  line-height: 1.1;
+  color: var(--cesped);
+}
+
+.pasos__titulo {
+  margin: 0 0 var(--e1);
+  font-size: 1.125rem;
   font-weight: 700;
+  color: var(--tinta);
 }
 
-.clavo[aria-pressed='true']::before {
-  content: '📌 ';
+.pasos__cuerpo p {
+  color: var(--tinta-2);
+  max-width: var(--renglon);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   BALANZA — el fiel que muestra qué tan pareja quedó la fuerza
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Historial: cada partido es un marcador ────────────────────────────── */
 
-.balanza {
-  padding-block: var(--e5) var(--e3);
+.partido {
+  padding: var(--e4);
+  margin-bottom: var(--e3);
+  border-radius: var(--r-panel);
+  background: #fff;
+  border: 1.5px solid var(--linea);
 }
 
-.balanza__lectura {
+.partido__cabeza {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
   gap: var(--e3);
   margin-bottom: var(--e3);
 }
 
-.balanza__veredicto {
-  font-family: var(--fuente-display);
-  font-stretch: 62%;
-  font-weight: 850;
-  text-transform: uppercase;
-  letter-spacing: -0.005em;
-  font-size: 1.5rem;
-  color: var(--tinta);
-}
-
-.balanza__veredicto--clavado {
-  color: var(--sello);
-}
-
-.balanza__barras {
+.partido__titulo {
   display: flex;
-  height: 14px;
-  border: 1.5px solid var(--tinta);
-  overflow: hidden;
-}
-
-.balanza__parte {
-  height: 100%;
-  border-right: 1.5px solid var(--tinta);
-}
-
-.balanza__parte:last-child {
-  border-right: 0;
-}
-
-.balanza__detalle {
-  margin-top: var(--e2);
-  color: var(--tinta-2);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   PASOS DEL "CÓMO FUNCIONA" (home)
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.pasos {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: paso;
-}
-
-.pasos__item {
-  display: grid;
-  grid-template-columns: 5rem minmax(0, 1fr);
-  gap: var(--e4);
-  padding-block: var(--e5);
-  border-bottom: 1px solid var(--filete);
-}
-
-.pasos__item:last-child {
-  border-bottom: 0;
-}
-
-.pasos__numero {
-  font-size: 4rem;
-  line-height: 0.85;
-  color: var(--birome);
-  font-variant-numeric: tabular-nums;
-}
-
-.pasos__titulo {
-  margin: 0 0 var(--e2);
-  font-size: 1.375rem;
-  color: var(--tinta);
-}
-
-.pasos__cuerpo p {
-  margin: 0;
-  color: var(--tinta-2);
-  max-width: var(--renglon);
-  line-height: 1.55;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   HISTORIAL — la lista de partidos jugados
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.partido {
-  padding-block: var(--e4);
-  border-bottom: 1px solid var(--filete);
+  flex-direction: column;
 }
 
 .partido__fecha {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--e3);
+  font-weight: 650;
+  color: var(--tinta-2);
+  font-size: var(--t-nota);
 }
 
 .partido__resultado {
-  color: var(--tinta-2);
-  margin-right: var(--e2);
+  font-family: var(--fuente-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  text-transform: uppercase;
 }
 
-.partido__equipos {
+.partido__tablero {
   display: grid;
-  gap: var(--e4);
-  grid-template-columns: 1fr;
-  margin-top: var(--e3);
-}
-
-@media (min-width: 560px) {
-  .partido__equipos {
-    grid-template-columns: 1fr 1fr;
-  }
+  gap: var(--e3);
 }
 
 .partido__equipo {
-  display: flex;
-  flex-direction: column;
-  gap: var(--e2);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 4rem;
+  align-items: center;
+  gap: 2px var(--e3);
 }
 
-.partido__color {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
+.partido__sigla {
+  display: grid;
+  place-items: center;
+  min-width: 3.5rem;
+  padding: 6px 8px;
+  border-radius: 6px;
   background: var(--tela);
-  border: 1px solid var(--tinta);
-  margin-right: 8px;
-  vertical-align: baseline;
+  color: var(--tinta-pechera);
+  font-size: 1.25rem;
+  box-shadow: inset 0 0 0 1px rgba(14, 33, 22, 0.2);
 }
 
-.partido__nombres {
-  color: var(--tinta-2);
-  margin: 0;
-  line-height: 1.5;
+.partido__pechera {
+  font-weight: 650;
+}
+
+/* El que ganó se lleva el tablero en verde. */
+.partido__equipo--gano .partido__goles {
+  background: var(--cesped);
+  border-color: var(--cesped);
 }
 
 .partido__goles {
-  display: flex;
-  align-items: baseline;
-  gap: var(--e2);
-  margin-top: var(--e2);
+  width: 100%;
+  height: 52px;
+  border: 1.5px solid var(--linea-fuerte);
+  border-radius: var(--r-control);
+  background: var(--tinta);
+  color: var(--tinta-sobre-verde);
+  font-size: 2.25rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   REGLAS DE LA CASA
-   ═══════════════════════════════════════════════════════════════════════════ */
+.partido__goles::-webkit-inner-spin-button,
+.partido__goles::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.partido__goles::placeholder {
+  color: var(--tinta-sobre-verde-2);
+}
+
+.partido__goles:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--amarilla);
+}
+
+.partido__nombres {
+  grid-column: 2 / -1;
+  color: var(--tinta-2);
+  font-size: var(--t-nota);
+}
+
+/* ─── Reglas de la casa ─────────────────────────────────────────────────── */
 
 .regla {
   display: flex;
   align-items: center;
   gap: var(--e3);
-  padding-block: var(--e3);
-  border-bottom: 1px solid var(--filete);
-  font-size: 1rem;
+  padding-block: var(--e2);
+  border-bottom: 1.5px solid var(--linea);
 }
 
 .regla__tipo {
-  font-family: var(--fuente-dato);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  border: 1px solid var(--tinta);
-  padding: 4px 7px 3px;
-  color: var(--tinta);
   flex: none;
+  font-size: var(--t-chico);
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--r-ficha);
+  background: var(--cal-3);
+  color: var(--tinta);
 }
 
 .regla__quienes {
   flex: 1;
   min-width: 0;
-  color: var(--birome);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .regla-alta {
   margin-top: var(--e4);
   padding: var(--e4);
-  background: var(--papel-banda);
-  border: 1px solid var(--filete);
+  background: var(--cal-2);
+  border-radius: var(--r-panel);
 }
 
 .regla-alta__pares {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--e4);
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--e3);
+  align-items: end;
   margin-top: var(--e4);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   AVISOS, NOTAS, VACÍOS
-   ═══════════════════════════════════════════════════════════════════════════ */
+.regla-alta__pares .boton {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+@media (min-width: 600px) {
+  .regla-alta__pares {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  }
+
+  .regla-alta__pares .boton {
+    grid-column: auto;
+  }
+}
+
+/* ─── Avisos: la amarilla para avisar, el verde para informar ───────────── */
 
 .aviso {
-  border: 1px solid var(--sello);
-  background: var(--sello-fondo);
-  color: var(--tinta);
+  display: flex;
+  gap: var(--e3);
+  align-items: flex-start;
   padding: var(--e3) var(--e4);
   margin-block: var(--e4);
+  border-radius: var(--r-control);
+  background: var(--amarilla-suave);
+  color: var(--tinta);
   font-size: var(--t-nota);
   max-width: var(--renglon);
 }
 
+/* La tarjeta, levantada por el árbitro. */
+.aviso::before {
+  content: '';
+  flex: none;
+  width: 12px;
+  height: 17px;
+  margin-top: 1px;
+  border-radius: 2px;
+  background: var(--amarilla);
+  box-shadow: 0 0 0 1px rgba(14, 33, 22, 0.25);
+  transform: rotate(-8deg);
+}
+
 .aviso--tinta {
-  border-color: var(--birome);
-  background: var(--birome-fondo);
+  background: var(--cesped-suave);
+}
+
+.aviso--tinta::before {
+  display: none;
 }
 
 .vacio {
-  padding-block: var(--e3);
+  padding-block: var(--e2) var(--e4);
   color: var(--tinta-2);
   max-width: 48ch;
-  line-height: 1.55;
 }
 
 .nota {
@@ -1344,7 +1414,6 @@
   font-size: var(--t-nota);
   margin-top: var(--e3);
   max-width: var(--renglon);
-  line-height: 1.55;
 }
 
 .nota--arriba {
@@ -1353,65 +1422,62 @@
 }
 
 .enlace-copiable {
-  font-family: var(--fuente-dato);
-  font-size: var(--t-dato);
+  font-size: var(--t-chico);
   word-break: break-all;
   color: var(--tinta-2);
-  background: var(--papel-banda);
-  border: 1px solid var(--filete);
+  background: var(--cal-2);
+  border-radius: var(--r-control);
   padding: var(--e3);
   margin-top: var(--e3);
   max-height: 6rem;
   overflow: auto;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   BARRA DEL SILBATO — el sortear pegado al pie de la pantalla
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Barra del pitazo: "Sortear equipos" pegado al pie ─────────────────── */
 
 .barra-pie {
   position: sticky;
   bottom: 0;
-  background: var(--papel);
-  border-top: 3px solid var(--tinta);
-  padding: var(--e4) 0 calc(var(--e4) + env(safe-area-inset-bottom));
-  margin-top: var(--e6);
   z-index: 5;
+  margin-top: var(--e6);
+  padding: var(--e3) 0 calc(var(--e3) + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--cal) 70%, rgba(243, 245, 239, 0));
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   LISTA DE NOMBRES (en la vista "unirse")
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ─── Unirse: la lista de los que vienen en el link ─────────────────────── */
 
 .lista-nombres {
-  border-top: 1.5px solid var(--filete-activo);
+  border-top: 1.5px solid var(--linea);
 }
 
 .lista-nombres__fila {
   display: grid;
-  grid-template-columns: 2.25rem minmax(0, 1fr) auto auto;
+  grid-template-columns: 2rem minmax(0, 1fr) auto 2.5ch;
   align-items: center;
   gap: var(--e3);
   padding-block: var(--e3);
-  border-bottom: 1px solid var(--filete);
+  border-bottom: 1.5px solid var(--linea);
 }
 
-.lista-nombres__fila .jugador__numero {
-  font-size: 1rem;
-  color: var(--tinta-3);
+.lista-nombres__numero {
+  color: var(--tinta-2);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 
 .lista-nombres__fila .escrito {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 600;
+  font-weight: 650;
   font-size: 1.0625rem;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   PIE — cierre de la planilla y firma del que la armó
-   ═══════════════════════════════════════════════════════════════════════════ */
+.lista-nombres__fila .anotado__nivel {
+  text-align: right;
+}
+
+/* ─── Pie y firma ───────────────────────────────────────────────────────── */
 
 .pie {
   display: flex;
@@ -1419,37 +1485,32 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--e4);
-  padding-top: var(--e7);
-  padding-bottom: var(--e5);
-  margin-top: var(--e7);
-  border-top: 1px solid var(--filete);
+  padding-top: var(--e6);
+  margin-top: var(--e8);
+  border-top: 1.5px solid var(--linea);
 }
 
 .pie__marca {
-  margin: 0;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: var(--cesped);
 }
 
-/*
- * La firma del constructor: chapita negra con el logo del lobo de VILA, cosida
- * al costado del pie. El logo llega con un fondo oscuro de origen, así que el
- * marco negro lo contiene y de paso funciona como "sello del creador".
- */
+/* La firma del que la hizo: chapita oscura con el logo del lobo de VILA. */
 .firma {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 6px 12px 6px 6px;
+  padding: 6px 14px 6px 6px;
+  border-radius: var(--r-ficha);
   background: var(--tinta);
-  color: var(--papel);
+  color: var(--tinta-sobre-verde);
   text-decoration: none;
-  border: 1px solid var(--tinta);
-  transition: background var(--anim), transform var(--anim);
+  transition: background var(--anim);
 }
 
 .firma:hover {
-  background: var(--birome);
-  border-color: var(--birome);
-  transform: translateY(-1px);
+  background: var(--cesped-hondo);
 }
 
 .firma__logo {
@@ -1459,50 +1520,22 @@
   object-fit: cover;
   object-position: center 30%;
   border-radius: 50%;
-  background: var(--tinta);
 }
 
 .firma__texto {
   display: inline-flex;
   flex-direction: column;
   line-height: 1;
-  gap: 3px;
+  gap: 2px;
 }
 
 .firma__hecho {
-  color: var(--filete);
-  font-size: 0.5625rem;
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  color: var(--tinta-sobre-verde-2);
 }
 
 .firma__nombre {
-  font-size: 1.125rem;
-  color: var(--canario);
-  letter-spacing: 0.06em;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   ANIMACIONES
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-@keyframes entrar {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes escribir {
-  from {
-    opacity: 0;
-    transform: translateX(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  font-size: 1.25rem;
+  color: var(--amarilla);
+  letter-spacing: 0.04em;
 }

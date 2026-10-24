@@ -35,16 +35,27 @@ export default function Inicio() {
 
   return (
     <>
-      <header className="tapa margen">
-        <h1 className="tapa__titulo display">
-          Arma
-          <br />
-          <span className="tapa__subrayado">tu equipo</span>
-        </h1>
-        <p className="tapa__bajada">
-          Cargá el plantel, ponele un puntaje a cada uno y que el sorteo haga el resto. Equipos parejos,
-          sin discusión de vestuario.
-        </p>
+      <header className="banda tapa">
+        {/* El área grande y el punto penal, en cal, asomando por la esquina. */}
+        <svg className="tapa__cal" viewBox="0 0 240 200" aria-hidden="true">
+          <g fill="none" stroke="currentColor" strokeWidth="3">
+            <path d="M40 0v120h200" />
+            <path d="M130 0v50h110" />
+            <path d="M40 120a80 80 0 0 0 0 0M78 120a62 62 0 0 0 100 0" />
+          </g>
+          <circle cx="128" cy="88" r="4" fill="currentColor" />
+        </svg>
+        <div className="margen tapa__interior">
+          <h1 className="tapa__titulo display">
+            Arma
+            <br />
+            tu equipo
+          </h1>
+          <p className="tapa__bajada">
+            Cargá el plantel, ponele un puntaje a cada uno y que el sorteo haga el resto. Equipos parejos,
+            sin discusión de vestuario.
+          </p>
+        </div>
       </header>
 
       <div className="margen">
@@ -55,16 +66,12 @@ export default function Inicio() {
                 <li key={grupo.id}>
                   <Link to={`/g/${grupo.id}`} className="planilla-fila">
                     <span className="planilla-fila__nombre display">{grupo.nombre}</span>
-                    <span className="planilla-fila__detalle dato">
-                      Fútbol {grupo.cancha}
-                      {' · '}
-                      {grupo.jugadores.filter((j) => j.activo).length} jugadores
+                    <span className="planilla-fila__detalle">
+                      Fútbol {grupo.cancha}, {grupo.jugadores.filter((j) => j.activo).length} jugadores
                       {grupo.partidos.length > 0 &&
-                        ` · ${grupo.partidos.length} ${grupo.partidos.length === 1 ? 'partido' : 'partidos'}`}
+                        `, ${grupo.partidos.length} ${grupo.partidos.length === 1 ? 'partido jugado' : 'partidos jugados'}`}
                     </span>
-                    <span className="planilla-fila__flecha" aria-hidden="true">
-                      →
-                    </span>
+                    <span className="planilla-fila__cancha">F{grupo.cancha}</span>
                   </Link>
                 </li>
               ))}
@@ -143,9 +150,9 @@ export default function Inicio() {
         <Seccion titulo="Cómo funciona">
           <ol className="pasos">
             <li className="pasos__item">
-              <span className="pasos__numero display">1</span>
+              <p className="pasos__momento">La previa</p>
               <div className="pasos__cuerpo">
-                <h3 className="pasos__titulo display">Cargás el plantel</h3>
+                <h3 className="pasos__titulo">Cargás el plantel</h3>
                 <p>
                   Escribís los nombres de los que juegan y le ponés a cada uno un puntaje del 1 al 10.
                   Marcá quién ataja: los arqueros se reparten uno por equipo.
@@ -153,9 +160,9 @@ export default function Inicio() {
               </div>
             </li>
             <li className="pasos__item">
-              <span className="pasos__numero display">2</span>
+              <p className="pasos__momento">El día del partido</p>
               <div className="pasos__cuerpo">
-                <h3 className="pasos__titulo display">Tildás quién vino</h3>
+                <h3 className="pasos__titulo">Tildás quién vino</h3>
                 <p>
                   El día del partido marcás los que están y elegís en cuántos equipos repartir. Si son
                   once, salen de seis y de cinco.
@@ -163,9 +170,9 @@ export default function Inicio() {
               </div>
             </li>
             <li className="pasos__item">
-              <span className="pasos__numero display">3</span>
+              <p className="pasos__momento">Pitazo inicial</p>
               <div className="pasos__cuerpo">
-                <h3 className="pasos__titulo display">Suena el silbato</h3>
+                <h3 className="pasos__titulo">Suena el silbato</h3>
                 <p>
                   El sorteo prueba cientos de repartos, se queda con todos los que dan igual de parejos y
                   elige uno de ésos al azar. Cada vez que lo tocás salen equipos distintos, con el mismo

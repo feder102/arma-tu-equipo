@@ -76,54 +76,57 @@ function FilaPartido({
 
   return (
     <li className="partido">
-      <div className="partido__fecha">
-        <span className="etiqueta">{formatearFecha(partido.fecha)}</span>
-        <span className="botonera botonera--pegada">
+      <div className="partido__cabeza">
+        <p className="partido__titulo">
+          <span className="partido__fecha">{formatearFecha(partido.fecha)}</span>
           {hayMarcador && (
-            <span className="dato partido__resultado">
+            <span className="partido__resultado">
               {ganadores.length === 1
-                ? `Ganaron las ${pecheraNombre(ganadores[0])}`
+                ? `Ganaron las ${pecheraDe(partido.equipos[ganadores[0]].pechera, ganadores[0]).nombre}`
                 : 'Empataron'}
             </span>
           )}
-          <button type="button" className="boton boton--pelado boton--peligro" onClick={onBorrar}>
-            Borrar
-          </button>
-        </span>
+        </p>
+        <button type="button" className="boton boton--pelado boton--peligro" onClick={onBorrar}>
+          Borrar
+        </button>
       </div>
 
-      <div className="partido__equipos">
-        {partido.equipos.map((equipo, i) => (
-          <div key={i} className="partido__equipo">
-            <span className="etiqueta">
-              <span className="partido__color" style={{ '--tela': colorDe(equipo.pechera, i) } as React.CSSProperties} />
-              {pecheraNombre(i, equipo.pechera)}
-            </span>
-            <p className="partido__nombres">{equipo.jugadores.map(nombreDe).join(', ')}</p>
-            <label className="partido__goles">
-              <span className="etiqueta">Goles</span>
+      <div className="partido__tablero">
+        {partido.equipos.map((equipo, i) => {
+          const p = pecheraDe(equipo.pechera, i);
+          return (
+            <div
+              key={i}
+              className={`partido__equipo${ganadores.length === 1 && ganadores[0] === i ? ' partido__equipo--gano' : ''}`}
+            >
+              <span
+                className="partido__sigla display"
+                style={{ '--tela': p.tela, '--tinta-pechera': p.tinta } as React.CSSProperties}
+              >
+                {p.corto}
+              </span>
+              <span className="partido__pechera">{p.nombre}</span>
               <input
-                className="campo__entrada campo__entrada--corto"
+                className="partido__goles display"
                 type="number"
                 min={0}
                 max={99}
                 inputMode="numeric"
                 value={equipo.goles ?? ''}
                 onChange={(e) => onGoles(i, e.target.value === '' ? null : Number(e.target.value))}
-                placeholder="—"
+                placeholder="–"
+                aria-label={`Goles de las ${p.nombre}`}
               />
-            </label>
-          </div>
-        ))}
+              <p className="partido__nombres">{equipo.jugadores.map(nombreDe).join(', ')}</p>
+            </div>
+          );
+        })}
       </div>
     </li>
   );
 }
 
-function pecheraNombre(indice: number, id?: string): string {
-  return PECHERAS.find((p) => p.id === id)?.nombre ?? pechera(indice).nombre;
-}
-
-function colorDe(id: string, indice: number): string {
-  return PECHERAS.find((p) => p.id === id)?.tela ?? pechera(indice).tela;
+function pecheraDe(id: string, indice: number) {
+  return PECHERAS.find((p) => p.id === id) ?? pechera(indice);
 }

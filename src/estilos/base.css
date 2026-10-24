@@ -13,30 +13,16 @@ body {
   color: var(--tinta);
   font-family: var(--fuente-texto);
   font-size: var(--t-cuerpo);
-  line-height: 1.55;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  /* Fondo verde cancha con la línea de cal a los costados de la hoja. */
-  background:
-    linear-gradient(
-      to right,
-      var(--cancha) 0,
-      var(--cancha) calc(50% - var(--hoja) / 2 - 4px),
-      var(--cal) calc(50% - var(--hoja) / 2 - 4px),
-      var(--cal) calc(50% - var(--hoja) / 2 - 2px),
-      var(--cancha) calc(50% - var(--hoja) / 2 - 2px),
-      var(--cancha) calc(50% + var(--hoja) / 2 + 2px),
-      var(--cal) calc(50% + var(--hoja) / 2 + 2px),
-      var(--cal) calc(50% + var(--hoja) / 2 + 4px),
-      var(--cancha) calc(50% + var(--hoja) / 2 + 4px),
-      var(--cancha) 100%
-    );
-  background-attachment: fixed;
+  /* En pantalla grande la columna de la app queda apoyada sobre el pasto. */
+  background: var(--pasto) var(--cesped);
   min-height: 100dvh;
 }
 
 @media (max-width: 860px) {
   body {
-    background: var(--papel);
+    background: var(--cal);
   }
 }
 
@@ -57,7 +43,7 @@ ol {
 }
 
 a {
-  color: var(--birome);
+  color: var(--cesped);
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
@@ -71,24 +57,19 @@ textarea {
 }
 
 :focus-visible {
-  outline: 2px solid var(--birome);
+  outline: 3px solid var(--amarilla);
   outline-offset: 2px;
+  border-radius: 4px;
 }
 
-/*
- * La hoja: la planilla de convocatoria del fútbol de los martes.
- * Fibra horizontal como el papel de renglones Rivadavia, sombra que la
- * despega de la cancha, sin bordes grises que ensucien la lectura.
- */
+/* La columna de la app: cal limpia, con el canto de una línea de cal contra el pasto. */
 .hoja {
   max-width: var(--hoja);
   margin: 0 auto;
   min-height: 100dvh;
-  background:
-    var(--papel-fibras),
-    var(--papel);
+  background: var(--cal);
   padding-bottom: calc(var(--e8) + env(safe-area-inset-bottom));
-  box-shadow: 0 0 0 1px rgba(18, 22, 11, 0.08), 0 24px 40px -20px rgba(18, 22, 11, 0.28);
+  box-shadow: 0 0 0 4px var(--cal), 0 0 0 5px rgba(14, 33, 22, 0.25);
 }
 
 .margen {
@@ -104,16 +85,6 @@ textarea {
   .margen {
     padding-inline: var(--e6);
   }
-}
-
-/* Doble filete: el remate clásico de cabecera de formulario. */
-.doble-filete {
-  border-bottom: var(--canto-fuerte);
-  box-shadow: 0 3px 0 -2px var(--filete-fuerte);
-}
-
-.filete {
-  border-bottom: var(--canto);
 }
 
 .solo-lectores {
@@ -138,8 +109,13 @@ textarea {
   .hoja {
     max-width: none;
     min-height: 0;
-    border: 0;
+    box-shadow: none;
     background: #fff;
+  }
+
+  .banda {
+    background: #fff !important;
+    color: #000 !important;
   }
 
   .solapas,
@@ -152,6 +128,7 @@ textarea {
   .alta,
   .regla-alta,
   .enlace-copiable,
+  .cancha-sorteo,
   .pie {
     display: none !important;
   }
@@ -167,7 +144,8 @@ textarea {
     break-inside: avoid;
   }
 
-  .pechera__cuello {
+  .pechera__cuello,
+  .marcador__equipo {
     /* Que el color de la pechera salga sí o sí, aunque la impresora ahorre tinta. */
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;

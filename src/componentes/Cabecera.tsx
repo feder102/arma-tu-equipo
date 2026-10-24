@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import type { Grupo } from '../lib/tipos';
-import { Sello } from './Piezas';
+import { Entrada } from './Piezas';
 
 /** El nombre del grupo se escribe encima del título y crece de renglón si hace falta. */
 function TituloEditable({ valor, onCambio }: { valor: string; onCambio: (nombre: string) => void }) {
@@ -41,6 +41,18 @@ function TituloEditable({ valor, onCambio }: { valor: string; onCambio: (nombre:
   );
 }
 
+/** La vuelta a la home, con un chevrón dibujado en vez de una flecha pegada al texto. */
+export function Volver() {
+  return (
+    <NavLink to="/" className="volver">
+      <svg className="volver__icono" viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      Todas las planillas
+    </NavLink>
+  );
+}
+
 export function CabeceraGrupo({
   grupo,
   onRenombrar,
@@ -54,13 +66,11 @@ export function CabeceraGrupo({
   const enSorteo = pathname.endsWith('/sorteo');
 
   return (
-    <header className="cabecera-grupo">
+    <header className="banda cabecera-grupo">
       <div className="margen cabecera-grupo__cinta">
-        <NavLink to="/" className="volver">
-          Todas las planillas
-        </NavLink>
-        <span className="dato cabecera-grupo__linea">
-          Fútbol {grupo.cancha} · Plantel de {anotados}
+        <Volver />
+        <span className="cabecera-grupo__linea">
+          Fútbol {grupo.cancha}, {anotados} en el plantel
         </span>
       </div>
 
@@ -69,7 +79,7 @@ export function CabeceraGrupo({
 
       <div className="margen cabecera-grupo__tapa">
         <TituloEditable valor={grupo.nombre} onCambio={onRenombrar} />
-        <Sello codigo={grupo.id} />
+        <Entrada codigo={grupo.id} />
       </div>
 
       <nav className="margen solapas" aria-label="Secciones del grupo">

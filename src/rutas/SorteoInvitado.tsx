@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Balanza, TarjetaPechera } from '../componentes/Pecheras';
-import { Resumen, Seccion, Sello, formatearFecha, formatearNivel, useCopiar } from '../componentes/Piezas';
+import { useNavigate } from 'react-router-dom';
+import { CanchaSorteo, Marcador, TarjetaPechera } from '../componentes/Pecheras';
+import { Entrada, Resumen, Seccion, formatearFecha, formatearNivel, useCopiar } from '../componentes/Piezas';
+import { Volver } from '../componentes/Cabecera';
 import { useGrupos } from '../estado/grupos';
 import { pechera } from '../lib/pecheras';
 import type { SorteoCompartido } from '../lib/compartir';
@@ -51,13 +52,11 @@ export default function SorteoInvitado({
 
   return (
     <>
-      <header className="cabecera-grupo">
+      <header className="banda cabecera-grupo cabecera-grupo--suelta">
         <div className="margen cabecera-grupo__cinta">
-          <Link to="/" className="volver">
-            Todas las planillas
-          </Link>
-          <span className="dato cabecera-grupo__linea">
-            Fútbol {sorteo.cancha} · {totalJugadores} jugadores
+          <Volver />
+          <span className="cabecera-grupo__linea">
+            Fútbol {sorteo.cancha}, {totalJugadores} jugadores
           </span>
         </div>
 
@@ -65,12 +64,10 @@ export default function SorteoInvitado({
 
         <div className="margen cabecera-grupo__tapa">
           <div>
-            <p className="etiqueta">Sorteo compartido</p>
-            <p className="titulo-editable" style={{ pointerEvents: 'none' }}>
-              {sorteo.nombreGrupo}
-            </p>
+            <p className="cabecera-grupo__antetitulo">Te pasaron un sorteo</p>
+            <p className="titulo-editable display">{sorteo.nombreGrupo}</p>
           </div>
-          {codigoGrupo && <Sello codigo={codigoGrupo} />}
+          {codigoGrupo && <Entrada codigo={codigoGrupo} />}
         </div>
       </header>
 
@@ -86,6 +83,10 @@ export default function SorteoInvitado({
         />
 
         <Seccion titulo="Así quedaron los equipos">
+          <CanchaSorteo equipos={equipos} />
+
+          <Marcador promedios={promedios} diferencia={diferencia} />
+
           <div className="pecheras">
             {equipos.map((jugadores, i) => (
               <TarjetaPechera
@@ -94,12 +95,9 @@ export default function SorteoInvitado({
                 jugadores={jugadores}
                 promedio={promedios[i]}
                 fijados={{}}
-                onFijar={() => {}}
               />
             ))}
           </div>
-
-          <Balanza fuerzas={fuerzas} diferencia={diferencia} />
 
           <div className="botonera botonera--separada">
             <button type="button" className="boton" onClick={() => copiar(textoParaPasar)}>

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useContextoGrupo } from './MarcoGrupo';
-import { Balanza, TarjetaPechera } from '../componentes/Pecheras';
+import { CanchaSorteo, Marcador, TarjetaPechera } from '../componentes/Pecheras';
 import { Seccion, formatearNivel, useCopiar } from '../componentes/Piezas';
 import { sortearEquipos } from '../lib/armar';
 import { enlaceDelSorteo } from '../lib/compartir';
@@ -29,6 +29,11 @@ export default function Sorteo() {
       ),
     [sorteo, porId],
   );
+
+  // El link autosuficiente: quien lo abre ve los equipos aunque no tenga el
+  // grupo en su teléfono, porque la foto del sorteo viaja adentro del #.
+  // Va antes del return temprano para que los hooks corran siempre en el mismo orden.
+  const link = useMemo(() => (sorteo ? enlaceDelSorteo(grupo, sorteo) : ''), [grupo, sorteo]);
 
   if (!sorteo) {
     return (
@@ -96,10 +101,6 @@ export default function Sorteo() {
     }));
   }
 
-  // El link autosuficiente: quien lo abre ve los equipos aunque no tenga el
-  // grupo en su teléfono, porque la foto del sorteo viaja adentro del #.
-  const link = useMemo(() => enlaceDelSorteo(grupo, sorteo), [grupo, sorteo]);
-
   const textoParaPasar = [
     `${grupo.nombre} — equipos`,
     '',
@@ -119,6 +120,10 @@ export default function Sorteo() {
         titulo="Así quedaron"
         cuenta={sorteo.variantes ? `1 de ${sorteo.variantes} repartos parejos` : undefined}
       >
+        <CanchaSorteo equipos={equipos} />
+
+        <Marcador promedios={promedios} diferencia={diferencia} />
+
         <div className="pecheras">
           {equipos.map((jugadores, i) => (
             <TarjetaPechera
@@ -131,8 +136,6 @@ export default function Sorteo() {
             />
           ))}
         </div>
-
-        <Balanza fuerzas={fuerzas} diferencia={diferencia} />
 
         {error && <p className="aviso">{error}</p>}
 
@@ -162,7 +165,7 @@ export default function Sorteo() {
 
         <p className="nota">
           El link del sorteo va con el mensaje: cualquiera que lo abra ve estos mismos equipos, aunque no
-          tenga la planilla en su teléfono. Tocá <strong>fijo</strong> al lado de un jugador para clavarlo
+          tenga la planilla en su teléfono. Tocá <strong>Fijar</strong> al lado de un jugador para clavarlo
           en su equipo y volver a sortear el resto.
         </p>
       </Seccion>

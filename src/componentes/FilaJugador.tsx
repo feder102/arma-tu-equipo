@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Jugador } from '../lib/tipos';
 import { Nivel } from './Piezas';
+import { Camiseta } from './Pecheras';
 
 /**
  * Un renglón del plantel — el equivalente a una línea de la lista de convocados.
  *
- * Se lee de izquierda a derecha como una entrada de planilla real: número de
- * orden, nombre escrito con birome, la escala de nivel, y las tres cosas que
+ * Se lee de izquierda a derecha: la camiseta con el número de orden (amarilla si
+ * ataja), el nombre editable en su lugar, la escala de nivel, y las tres cosas que
  * podés hacerle a ese jugador (marcarlo arquero, darlo de baja para este
  * partido, borrarlo del plantel entero).
  */
@@ -37,8 +38,8 @@ export function FilaJugador({
 
   return (
     <li className={jugador.activo ? 'jugador' : 'jugador jugador--baja'}>
-      <span className="jugador__numero display" aria-hidden="true">
-        {String(numero).padStart(2, '0')}
+      <span className="jugador__camiseta">
+        <Camiseta neutra dorsal={numero} arquero={jugador.arquero} />
       </span>
 
       <input
@@ -64,10 +65,7 @@ export function FilaJugador({
           onClick={() => onCambiar({ arquero: !jugador.arquero })}
           title={jugador.arquero ? 'Es arquero' : 'Marcarlo como arquero'}
         >
-          <span className="marca__glifo" aria-hidden="true">
-            1
-          </span>
-          <span className="marca__rotulo">Arq</span>
+          Ataja
         </button>
         <button
           type="button"
@@ -76,10 +74,7 @@ export function FilaJugador({
           onClick={() => onCambiar({ activo: !jugador.activo })}
           title={jugador.activo ? 'Darlo de baja del plantel' : 'Volver a sumarlo al plantel'}
         >
-          <span className="marca__glifo" aria-hidden="true">
-            —
-          </span>
-          <span className="marca__rotulo">Baja</span>
+          Baja
         </button>
         <button
           type="button"
@@ -88,7 +83,13 @@ export function FilaJugador({
           aria-label={`Borrar a ${jugador.nombre || `jugador ${numero}`}`}
           title={confirmando ? 'Tocá de nuevo para confirmar' : 'Borrar del plantel'}
         >
-          <span aria-hidden="true">{confirmando ? '¿?' : '×'}</span>
+          {confirmando ? (
+            '¿Seguro?'
+          ) : (
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="m4 4 8 8m0-8-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          )}
         </button>
       </span>
     </li>

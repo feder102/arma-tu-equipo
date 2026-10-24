@@ -19,14 +19,16 @@ function AlPrincipio() {
 
 function NoExiste() {
   return (
-    <div className="margen">
-      <header className="cabecera">
+    <div>
+      <header className="banda cabecera cabecera--banda margen">
         <h1 className="cabecera__titulo display">Afuera</h1>
         <p className="cabecera__bajada">Esta dirección no existe. Volvé al inicio y arrancá de nuevo.</p>
       </header>
-      <Link to="/" className="boton boton--principal">
-        Volver al inicio
-      </Link>
+      <div className="margen">
+        <Link to="/" className="boton boton--principal">
+          Volver al inicio
+        </Link>
+      </div>
     </div>
   );
 }
@@ -49,13 +51,13 @@ export default function App() {
         </Routes>
 
         <footer className="pie margen">
-          <p className="etiqueta pie__marca">Arma Tu Equipo</p>
+          <p className="pie__marca display">Arma tu equipo</p>
           <a
             className="firma"
             href="https://landing.vila.ar"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Hecho por VILA — abrir landing.vila.ar en una pestaña nueva"
+            aria-label="Hecho por VILA. Abre landing.vila.ar en una pestaña nueva"
           >
             <img
               src="/vila.webp"
@@ -67,7 +69,7 @@ export default function App() {
               decoding="async"
             />
             <span className="firma__texto">
-              <span className="firma__hecho etiqueta">Hecho por</span>
+              <span className="firma__hecho">hecho por</span>
               <span className="firma__nombre display">VILA</span>
             </span>
           </a>

@@ -1,76 +1,60 @@
-/*
-  Arma Tu Equipo — sistema visual "planilla del fútbol de los martes".
+@import '@fontsource-variable/big-shoulders-display';
 
-  Dos capas de tinta sobre papel:
-    · lo IMPRESO (negro, condensada, filetes) — el formulario en sí
-    · lo ESCRITO (tinta cargada azul-violeta) — lo que carga el usuario
-  Dos colores cálidos, que aparecen recién cuando importan:
-    · CANARIO — el equipo activo, el jugador seleccionado, el amarillo de la Copa
-    · SELLO — el código del grupo, el ganador, la línea que corrige el árbitro
-  Y una vez, al final del sorteo, la explosión de las PECHERAS.
+/*
+  Arma Tu Equipo — la cancha de 5 de los martes.
+
+  El contrato está en DESIGN.md. Resumen:
+    · CAL: el fondo de lectura, la tiza de las líneas.
+    · CÉSPED: el color que manda. Banda de arriba, la cancha del sorteo, la acción principal.
+    · AMARILLA y ROJA: las tarjetas del árbitro. Avisar y borrar, nada más.
+    · Las PECHERAS aparecen recién cuando sale el sorteo.
 */
 
 :root {
-  /* Papel: un cuadernillo de oficina, con la fibra visible al mirar de cerca. */
-  --escritorio: #a3ad91;
-  --papel: #ecefe2;
-  --papel-banda: #e3e7d8;
-  --papel-hondo: #d8ddca;
+  --cal: #f3f5ef;
+  --cal-2: #e8ece4;
+  --cal-3: #dce3da;
 
-  /* Un rayado horizontal casi imperceptible, como el papel de renglones Rivadavia. */
-  --papel-fibras:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0,
-      transparent 26px,
-      rgba(21, 25, 15, 0.028) 26px,
-      rgba(21, 25, 15, 0.028) 27px
-    );
+  --cesped: #1d6236;
+  --cesped-claro: #24703f;
+  --cesped-hondo: #134628;
+  --cesped-suave: #dfeadf;
 
-  /* Tinta impresa: negro humo con matiz verde, no negro plano de imprenta digital. */
-  --tinta: #12160b;
-  --tinta-2: #3d4335;
-  --tinta-3: #545a4b;
-  --filete: #a3ac93;
-  --filete-activo: #7a836a;
-  --filete-fuerte: #12160b;
+  /* Las franjas del corte del pasto, como se ven desde la tribuna. */
+  --pasto: repeating-linear-gradient(
+    90deg,
+    var(--cesped) 0,
+    var(--cesped) 56px,
+    var(--cesped-claro) 56px,
+    var(--cesped-claro) 112px
+  );
 
-  /* Tinta cargada: la lapicera Bic, pero más honda — como salía en la revista El Gráfico. */
-  --birome: #16276a;
-  --birome-2: #2c3f8a;
-  --birome-fondo: #dbe0f0;
+  --tinta: #0e2116;
+  --tinta-2: #3f5447;
+  --tinta-sobre-verde: #f3f5ef;
+  --tinta-sobre-verde-2: #d8e7db;
+  --linea: #cfd8cf;
+  --linea-fuerte: #9fb0a3;
 
-  /* El amarillo canario: la Copa, la remera del arquero clásico, la línea que dibuja el sol. */
-  --canario: #f2c230;
-  --canario-hondo: #b78b12;
-  --canario-fondo: #f7e7a8;
-
-  /* El sello rojo: cuño de secretaría, boleta con corrección, tarjeta del árbitro. */
-  --sello: #b23324;
-  --sello-hondo: #7a1e12;
-  --sello-fondo: #f0dbd6;
-
-  /* Verde cancha: aparece sólo en el borde de la hoja, para que se lea "esto está apoyado en la cancha". */
-  --cancha: #315b30;
-  --cal: #f4f5ec;
+  --amarilla: #f4c20d;
+  --amarilla-suave: #fdf3cc;
+  --roja: #c3122b;
+  --roja-suave: #f9dfe2;
 
   /* Tipografía */
-  --fuente-display: 'Archivo Variable', 'Arial Narrow', system-ui, sans-serif;
-  --fuente-texto: 'Archivo Variable', system-ui, -apple-system, sans-serif;
-  --fuente-dato: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+  --fuente-display: 'Big Shoulders Display Variable', 'Arial Narrow', sans-serif;
+  --fuente-texto: 'Archivo Variable', 'Helvetica Neue', Arial, sans-serif;
 
-  /* Escala tipográfica con al menos 1.25 entre escalones. Display al peso de titular deportivo. */
-  --t-tapa: clamp(3rem, 13vw, 5.5rem);
-  --t-titulo: clamp(2.25rem, 7vw, 3rem);
-  --t-seccion: 1.375rem;
-  --t-rubro: 1.125rem;
+  /* Escala: al menos 1.25 entre escalones. */
+  --t-tapa: clamp(3.5rem, 16vw, 6.5rem);
+  --t-titulo: clamp(2.5rem, 9vw, 3.75rem);
+  --t-seccion: 1.75rem;
+  --t-rubro: 1.25rem;
   --t-cuerpo: 1rem;
   --t-nota: 0.875rem;
-  --t-dato: 0.8125rem;
-  --t-etiqueta: 0.6875rem;
+  --t-chico: 0.8125rem;
 
-  /* Ancho máximo de párrafo: más largo que esto cuesta seguir el renglón. */
-  --renglon: 68ch;
+  --renglon: 64ch;
 
   /* Espacio */
   --e1: 0.25rem;
@@ -82,43 +66,34 @@
   --e7: 3rem;
   --e8: 4rem;
 
-  --hoja: 820px;
-  --canto: 1px solid var(--filete);
-  --canto-fuerte: 2px solid var(--filete-fuerte);
+  --r-control: 8px;
+  --r-panel: 14px;
+  --r-ficha: 999px;
 
-  --anim: 180ms cubic-bezier(0.2, 0, 0.1, 1);
+  --hoja: 820px;
+  --anim: 160ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-/*
-  Los tres pesos tipográficos que uso.
-  · Display: mayúscula muy condensada, apretada — titular de tapa deportiva.
-  · Etiqueta: rótulo mecanografiado, letter-spacing generoso, monospaced.
-  · Dato: número tabular, siempre.
-*/
+/* Letra de cartel de estadio: títulos, números de camiseta, marcadores. */
 .display {
   font-family: var(--fuente-display);
-  font-stretch: 62%;
-  font-weight: 850;
-  text-transform: uppercase;
-  line-height: 0.86;
-  letter-spacing: -0.008em;
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: 0.005em;
 }
 
+/* Un rótulo es información: minúscula, letra de texto, sin espaciado. */
 .etiqueta {
-  font-family: var(--fuente-dato);
-  font-size: var(--t-etiqueta);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--tinta-3);
+  font-size: var(--t-chico);
+  font-weight: 600;
+  color: var(--tinta-2);
 }
 
 .dato {
-  font-family: var(--fuente-dato);
   font-variant-numeric: tabular-nums;
-  font-size: var(--t-dato);
+  font-size: var(--t-nota);
 }
 
 .escrito {
-  color: var(--birome);
+  color: var(--tinta);
 }
